@@ -1,19 +1,20 @@
 IIS API
 
-Domain
-    Entities - Сущности
-    Abstractions - интерфейсы репозиториев
+### Domain
 
-Application
-    Services - сервисы к каждой сущности (т.е. папка, например, UserService. В ней интерфейс, реализация и валидация)
+   - Entities - Сущности
+   - Abstractions - интерфейсы репозиториев
 
-Infrastructure
-    Repositories - реализация интерфейсов репозиториев
-    Data/Seeders - данные для заполнения базы данных по умолчанию
-    Data/EntityConfigurations - конфигурация сущностей через FluentAPI
+### Application
+   - Services - сервисы к каждой сущности (т.е. папка, например, UserService. В ней интерфейс, реализация и валидация)
 
-Presentation
-    Common/Middlewares - МИДЛВАААРЫ
-    Common/Swagger - какой-то файл
-    Common/Mapper - не факт, что надо
-    Comtrollers - контроллеры
+### Infrastructure
+   - Repositories - реализация интерфейсов репозиториев
+   - Data/Seeders - данные для заполнения базы данных по умолчанию
+   - Data/EntityConfigurations - конфигурация сущностей через FluentAPI
+
+### Presentation
+   - Common/Middlewares - МИДЛВАААРЫ
+   - Common/Swagger - какой-то файл
+   - Common/Mapper - не факт, что надо
+   - Comtrollers - контроллеры

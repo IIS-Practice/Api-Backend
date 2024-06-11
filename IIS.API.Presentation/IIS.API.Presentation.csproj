@@ -11,9 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Middlewares\" />
     <Folder Include="Common\Mapper\" />
-    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IIS.API.Application\IIS.API.Application.csproj" />
+    <ProjectReference Include="..\IIS.API.Infrastructure\IIS.API.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 ﻿namespace IIS.API.Domain.Entities;
-public class Rewiew
+public class Review
 {
     public Guid Id { get; set; }
 

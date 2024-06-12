@@ -20,8 +20,6 @@ public static class DependencyInjection
         services.AddScoped<IFaqRepository, FaqRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
 
-        services.AddApplicationServices();
-
         return services;
     }
 }

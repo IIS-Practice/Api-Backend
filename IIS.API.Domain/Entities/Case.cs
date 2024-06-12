@@ -17,5 +17,5 @@ public class Case
 
     public List<Service> Services { get; set; } = [];
 
-    public List<Rewiew> Rewiews { get; set; } = [];
+    public List<Review> Rewiews { get; set; } = [];
 }

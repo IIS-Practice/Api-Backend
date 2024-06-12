@@ -6,11 +6,11 @@ public interface IFaqRepository
 {
     public Task<Guid> AddFaqAsync(Faq faq, CancellationToken token);
 
-    public Task<IEnumerable<Faq>> GetAllFaqsAsync(Expression<Func<Faq, bool>>? filtres, CancellationToken token);
+    public Task<IEnumerable<Faq>> GetFaqsAsync(Expression<Func<Faq, bool>>? filtres, CancellationToken token);
 
-    public Task<Guid> UpdateAsync(Faq faq, CancellationToken token);
+    public Task<Guid> UpdateFaqAsync(Faq faq, CancellationToken token);
 
-    public Task DeleteAsync(Faq faq, CancellationToken token);
+    public Task DeleteFaqAsync(Faq faq, CancellationToken token);
 
-    public Task<Faq?> FirstOrDefaultAsync(Expression<Func<Faq, bool>> filtres, CancellationToken token);
+    public Task<Faq?> FirstOrDefaultFaqAsync(Expression<Func<Faq, bool>> filtres, CancellationToken token);
 }

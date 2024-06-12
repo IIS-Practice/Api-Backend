@@ -16,4 +16,6 @@ public class Case
     public int Complexity { get; set; }
 
     public List<Service> Services { get; set; } = [];
+
+    public List<Rewiew> Rewiews { get; set; } = [];
 }

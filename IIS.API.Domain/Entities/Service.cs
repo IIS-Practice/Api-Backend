@@ -12,4 +12,6 @@ public class Service
     public int Complexity { get; set; }
 
     public List<Specialist> Specialists { get; set; } = [];
+
+    public List<Case> Cases { get; set; } = [];
 }

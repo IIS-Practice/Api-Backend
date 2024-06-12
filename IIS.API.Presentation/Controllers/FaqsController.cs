@@ -1,8 +1,6 @@
-﻿using IIS.API.Domain.Entities;
+﻿using IIS.API.Application.Services.FaqService;
+using IIS.API.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-
-
-using IIS.API.Application.Services.FaqService;
 
 
 namespace IIS.API.Presentation.Controllers;

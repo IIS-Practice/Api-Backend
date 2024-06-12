@@ -1,6 +1,5 @@
-using IIS.API.Domain.Entities;
-using IIS.API.Infrastructure;
 using IIS.API.Application;
+using IIS.API.Infrastructure;
 using IIS.API.Presentation;
 using IIS.API.Presentation.Common.Middlewares;
 

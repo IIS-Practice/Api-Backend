@@ -2,7 +2,6 @@
 using IIS.API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace IIS.API.Infrastructure.Repositories;
 

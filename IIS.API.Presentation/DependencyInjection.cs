@@ -1,8 +1,4 @@
-﻿using IIS.API.Domain.Abstractions;
-using IIS.API.Infrastructure.Repositories;
-using IIS.API.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using IIS.API.Presentation.Common.Swagger;
+﻿using IIS.API.Presentation.Common.Swagger;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 namespace IIS.API.Presentation;

@@ -1,5 +1,4 @@
-﻿using IIS.API.Application;
-using IIS.API.Domain.Abstractions;
+﻿using IIS.API.Domain.Abstractions;
 using IIS.API.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +17,10 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(cfg => cfg.UseSqlServer(connectionString));
 
         services.AddScoped<IFaqRepository, FaqRepository>();
+<<<<<<< HEAD
         services.AddScoped<IReviewRepository, ReviewRepository>();
+=======
+>>>>>>> ca833e6f962c233dac3e5263e43caf94c355e2d0
 
         return services;
     }

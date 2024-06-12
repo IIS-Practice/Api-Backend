@@ -12,29 +12,27 @@ namespace IIS.API.Presentation.Controllers;
 [ApiController]
 public sealed class FaqsController : ControllerBase
 {
-    private readonly IFaqService _service;
+    private readonly IFaqService _faqService;
 
     public FaqsController(IFaqService service)
     {
-        _service = service;
+        _faqService = service;
     }
 
-    // GET: api/<FaqsController>
     [HttpGet]
     public async Task<IActionResult> Get(CancellationToken token)
     {
-        IEnumerable<Faq> response = await _service.GetAllAsync(token);
+        IEnumerable<Faq> response = await _faqService.GetFaqsAsync(token);
 
         return Ok(response);
     }
 
-    // GET api/<FaqsController>/5
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get(string id, CancellationToken token)
+    public async Task<IActionResult> Get([FromRoute] string id, CancellationToken token)
     {
         if (Guid.TryParse(id, out var faqId))
         {
-            Faq? response = await _service.GetFirstOrDefault(f => f.Id == faqId, token);
+            Faq? response = await _faqService.FirstOrDefaultFaqAsync(f => f.Id == faqId, token);
 
             return response is null ? NotFound() : Ok(response);
         }
@@ -42,23 +40,21 @@ public sealed class FaqsController : ControllerBase
         return NotFound();
     }
 
-    // POST api/<FaqsController>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] Faq faq, CancellationToken token)
     {
-        await _service.AddAsync(faq, token);
+        await _faqService.AddFaqAsync(faq, token);
 
         return Ok();
     }
 
-    // PUT api/<FaqsController>/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(string id, [FromBody] Faq faq, CancellationToken token)
+    public async Task<IActionResult> Put([FromRoute] string id, [FromBody] Faq faq, CancellationToken token)
     {
         if (Guid.TryParse(id, out var faqId))
         {
             faq.Id = faqId;
-            await _service.UpdateAsync(faq, token);
+            await _faqService.UpdateFaqAsync(faq, token);
 
             return Ok();
         }
@@ -66,13 +62,12 @@ public sealed class FaqsController : ControllerBase
         return NotFound();
     }
 
-    // DELETE api/<FaqsController>/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(string id, CancellationToken token)
+    public async Task<IActionResult> Delete([FromRoute] string id, CancellationToken token)
     {
         if (Guid.TryParse(id, out var faqId))
         {
-            await _service.DeleteAsync(faqId, token);
+            await _faqService.DeleteFaqAsync(faqId, token);
 
             return Ok();
         }

@@ -8,26 +8,26 @@ namespace IIS.API.Presentation.Controllers;
 [ApiController]
 public sealed class ReviewsController : ControllerBase
 {
-    private readonly IReviewService _service;
+    private readonly IReviewService _reviewService;
 
     public ReviewsController(IReviewService service)
     {
-        _service = service;
+        _reviewService = service;
     }
 
     [HttpGet]
     public async Task<IActionResult> Get(CancellationToken token)
     {
-        IEnumerable<Review> response = await _service.GetReviewsAsync(token);
+        IEnumerable<Review> response = await _reviewService.GetReviewsAsync(token);
         return Ok(response);
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get(string id, CancellationToken token)
+    public async Task<IActionResult> Get([FromRoute] string id, CancellationToken token)
     {
         if (Guid.TryParse(id, out var reviewId))
         {
-            Review? response = await _service.GetFirstOrDefaultReviewAsync(r => r.Id == reviewId, token);
+            Review? response = await _reviewService.GetFirstOrDefaultReviewAsync(r => r.Id == reviewId, token);
             return response is null ? NotFound() : Ok(response);
         }
         return NotFound();
@@ -36,28 +36,28 @@ public sealed class ReviewsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] Review review, CancellationToken token)
     {
-        await _service.AddReviewAsync(review, token);
+        await _reviewService.AddReviewAsync(review, token);
         return Ok();
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(string id, [FromBody] Review review, CancellationToken token)
+    public async Task<IActionResult> Put([FromRoute] string id, [FromBody] Review review, CancellationToken token)
     {
         if (Guid.TryParse(id, out var reviewId))
         {
             review.Id = reviewId;
-            await _service.UpdateReviewAsync(review, token);
+            await _reviewService.UpdateReviewAsync(review, token);
             return Ok();
         }
         return NotFound();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(string id, CancellationToken token)
+    public async Task<IActionResult> Delete([FromRoute] string id, CancellationToken token)
     {
         if (Guid.TryParse(id, out var reviewId))
         {
-            await _service.DeleteReviewAsync(reviewId, token);
+            await _reviewService.DeleteReviewAsync(reviewId, token);
             return Ok();
         }
         return NotFound();

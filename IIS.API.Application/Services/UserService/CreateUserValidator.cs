@@ -39,11 +39,14 @@ internal class CreateUserValidator : AbstractValidator<User>
 
         RuleFor(u => u.DateOfBirth).NotNull()
             .NotEmpty().WithMessage("Date of birth cannot be empty")
-            .GreaterThanOrEqualTo(DateOnly.Parse("01.01.1900")).WithMessage("Date of birth must be greater than 01.01.1900")
-            .LessThan(DateOnly.FromDateTime(DateTime.Now)).WithMessage($"Date of birth must be less than {DateTime.Now.Date}");
+            .GreaterThanOrEqualTo(DateTime.Parse("01.01.1900")).WithMessage("Date of birth must be greater than 01.01.1900")
+            .LessThan(DateTime.Now).WithMessage($"Date of birth must be less than {DateTime.Now.Date}");
 
         RuleFor(u => u.Gender).NotNull()
             .GreaterThanOrEqualTo(0).WithMessage("Gender must be greater or equal to 0")
             .LessThan(3).WithMessage("Gender must be less than 3");
+
+        RuleFor(u => u.PhoneNumber).NotNull()
+            .Matches(@"^\+375\s\([29|33]\)\s\d{3}-\d{2}-\d{2}$").WithMessage("The phone number does not match the pattern. Example: +375 (29/33) 111-11-11");
     }
 }

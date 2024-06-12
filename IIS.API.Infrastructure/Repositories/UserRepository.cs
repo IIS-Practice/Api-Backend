@@ -18,6 +18,7 @@ public sealed class UserRepository : IUserRepository
     public async Task<Guid> AddUserAsync(User user, CancellationToken token)
     {
         user.Id = Guid.NewGuid();
+        user.NormalizedEmail = user.Email.ToLower();
 
         await _users.AddAsync(user, token);
         await _context.SaveChangesAsync(token);
@@ -31,12 +32,12 @@ public sealed class UserRepository : IUserRepository
         await _context.SaveChangesAsync(token);
     }
 
-    public Task<User?> FirstOrDefaultAsync(Expression<Func<User, bool>> filtres, CancellationToken token)
+    public Task<User?> FirstOrDefaultUserAsync(Expression<Func<User, bool>> filtres, CancellationToken token)
     {
         return _users.FirstOrDefaultAsync(filtres, token);
     }
 
-    public Task<IEnumerable<User>> GetAllUsersAsync(Expression<Func<User, bool>>? filtres, CancellationToken token)
+    public Task<IEnumerable<User>> GetUsersAsync(Expression<Func<User, bool>>? filtres, CancellationToken token)
     {
         if (filtres is null)
             return Task.FromResult(_users.AsEnumerable());
@@ -46,6 +47,8 @@ public sealed class UserRepository : IUserRepository
 
     public async Task<Guid> UpdateUserAsync(User user, CancellationToken token)
     {
+        user.NormalizedEmail = user.Email.ToLower();
+
         _users.Update(user);
         await _context.SaveChangesAsync(token);
 

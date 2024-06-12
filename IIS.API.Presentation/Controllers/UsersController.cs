@@ -7,18 +7,18 @@ namespace IIS.API.Presentation.Controllers;
 [ApiController]
 public class UsersController : ControllerBase
 {
-    private readonly IUserService _service;
+    private readonly IUserService _userService;
 
     public UsersController(IUserService service)
     {
-        _service = service;
+        _userService = service;
     }
 
     // GET: api/<UsersController>
     [HttpGet]
     public async Task<IActionResult> Get(CancellationToken token)
     {
-        IEnumerable<User> response = await _service.GetAllAsync(token);
+        IEnumerable<User> response = await _userService.GetUsersAsync(token);
 
         return Ok(response);
     }
@@ -29,7 +29,7 @@ public class UsersController : ControllerBase
     {
         if (Guid.TryParse(id, out var userId))
         {
-            User? response = await _service.GetFirstOrDefault(f => f.Id == userId, token);
+            User? response = await _userService.GetFirstOrDefaultUserAsync(f => f.Id == userId, token);
 
             return response is null ? NotFound() : Ok(response);
         }
@@ -41,7 +41,7 @@ public class UsersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] User user, CancellationToken token)
     {
-        await _service.AddAsync(user, token);
+        await _userService.AddUserAsync(user, token);
 
         return Ok();
     }
@@ -53,7 +53,7 @@ public class UsersController : ControllerBase
         if (Guid.TryParse(id, out var userId))
         {
             user.Id = userId;
-            await _service.UpdateAsync(user, token);
+            await _userService.UpdateUserAsync(user, token);
 
             return Ok();
         }
@@ -67,7 +67,7 @@ public class UsersController : ControllerBase
     {
         if (Guid.TryParse(id, out var userId))
         {
-            await _service.DeleteAsync(userId, token);
+            await _userService.DeleteUserAsync(userId, token);
 
             return Ok();
         }

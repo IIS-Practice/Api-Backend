@@ -21,7 +21,7 @@ public class User
 
     public string City { get; set; } = string.Empty;
 
-    public DateOnly DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
 
     public int Gender { get; set; }
 }

@@ -13,6 +13,8 @@ public class User
 
     public string NormalizedEmail {  get; set; } = string.Empty;
 
+    public string Password {  get; set; } = string.Empty;
+
     public string PhoneNumber { get; set; } = string.Empty;
 
     public string Country { get; set; } = string.Empty;

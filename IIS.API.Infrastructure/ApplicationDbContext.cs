@@ -3,9 +3,10 @@ using IIS.API.Infrastructure.Data.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace IIS.API.Infrastructure;
-public sealed class ApplicationDbContext :DbContext
+public sealed class ApplicationDbContext : DbContext
 {
     public DbSet<Faq> Faqs => Set<Faq>();
+    public DbSet<Review> Reviews => Set<Review>();
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -17,6 +18,7 @@ public sealed class ApplicationDbContext :DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new FaqEntityTypeConfigurator());
+        modelBuilder.ApplyConfiguration(new ReviewEntityTypeConfigurator());
 
         base.OnModelCreating(modelBuilder);
     }

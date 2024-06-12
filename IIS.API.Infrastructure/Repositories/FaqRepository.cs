@@ -25,18 +25,18 @@ public sealed class FaqRepository : IFaqRepository
         return faq.Id;
     }
 
-    public async Task DeleteAsync(Faq faq, CancellationToken token)
+    public async Task DeleteFaqAsync(Faq faq, CancellationToken token)
     {
         _faqs.Remove(faq);
         await _context.SaveChangesAsync(token);
     }
 
-    public async Task<Faq?> FirstOrDefaultAsync(Expression<Func<Faq, bool>> filtres, CancellationToken token)
+    public async Task<Faq?> FirstOrDefaultFaqAsync(Expression<Func<Faq, bool>> filtres, CancellationToken token)
     {
         return await _faqs.FirstOrDefaultAsync(filtres, token);
     }
 
-    public Task<IEnumerable<Faq>> GetAllFaqsAsync(Expression<Func<Faq, bool>>? filtres, CancellationToken token)
+    public Task<IEnumerable<Faq>> GetFaqsAsync(Expression<Func<Faq, bool>>? filtres, CancellationToken token)
     {
         if (filtres is null)
             return Task.FromResult(_faqs.AsEnumerable());
@@ -44,7 +44,7 @@ public sealed class FaqRepository : IFaqRepository
         return Task.FromResult(_faqs.Where(filtres).AsEnumerable());
     }
 
-    public async Task<Guid> UpdateAsync(Faq faq, CancellationToken token)
+    public async Task<Guid> UpdateFaqAsync(Faq faq, CancellationToken token)
     {
         _faqs.Update(faq);
         await _context.SaveChangesAsync(token);

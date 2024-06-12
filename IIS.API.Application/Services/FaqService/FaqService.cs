@@ -7,56 +7,56 @@ using System.Linq.Expressions;
 namespace IIS.API.Application.Services.FaqService;
 internal sealed class FaqService : IFaqService
 {
-    private readonly IFaqRepository _repository;
-    private readonly AbstractValidator<Faq> _validator;
+    private readonly IFaqRepository _faqRepository;
+    private readonly AbstractValidator<Faq> _faqValidator;
 
     public FaqService(IFaqRepository repository)
     {
-        _repository = repository;
-        _validator = new CreateFaqValidator();
+        _faqRepository = repository;
+        _faqValidator = new CreateFaqValidator();
     }
 
-    public async Task<Guid> AddAsync(Faq faq, CancellationToken token)
+    public async Task<Guid> AddFaqAsync(Faq faq, CancellationToken token)
     {
-        ValidationResult valirateRes = await _validator.ValidateAsync(faq, token);
+        ValidationResult valirateRes = await _faqValidator.ValidateAsync(faq, token);
 
         if (!valirateRes.IsValid)
         {
             throw new ValidationException(valirateRes.Errors);
         }
 
-        await _repository.AddFaqAsync(faq, token);
+        await _faqRepository.AddFaqAsync(faq, token);
 
         return faq.Id;
     }
 
-    public async Task DeleteAsync(Guid faqId, CancellationToken token)
+    public async Task DeleteFaqAsync(Guid faqId, CancellationToken token)
     {
-        Faq? faq = await _repository.FirstOrDefaultAsync(f => f.Id == faqId, token);
+        Faq? faq = await _faqRepository.FirstOrDefaultFaqAsync(f => f.Id == faqId, token);
 
         if (faq == default)
             throw new KeyNotFoundException("Faq not found");
 
-        await _repository.DeleteAsync(faq, token);
+        await _faqRepository.DeleteFaqAsync(faq, token);
     }
 
-    public Task<IEnumerable<Faq>> GetAllAsync(CancellationToken token)
+    public Task<IEnumerable<Faq>> GetFaqsAsync(CancellationToken token)
     {
-        return _repository.GetAllFaqsAsync(null, token);
+        return _faqRepository.GetFaqsAsync(null, token);
     }
 
-    public async Task<Faq?> GetFirstOrDefault(Expression<Func<Faq, bool>> predicate, CancellationToken token)
+    public async Task<Faq?> FirstOrDefaultFaqAsync(Expression<Func<Faq, bool>> predicate, CancellationToken token)
     {
-        return await _repository.FirstOrDefaultAsync(predicate, token);
+        return await _faqRepository.FirstOrDefaultFaqAsync(predicate, token);
     }
 
-    public async Task<Guid> UpdateAsync(Faq faq, CancellationToken token)
+    public async Task<Guid> UpdateFaqAsync(Faq faq, CancellationToken token)
     {
-        Faq? existFaq = await _repository.FirstOrDefaultAsync(f => f.Id == faq.Id, token);
+        Faq? existFaq = await _faqRepository.FirstOrDefaultFaqAsync(f => f.Id == faq.Id, token);
 
         if (existFaq == default)
             throw new KeyNotFoundException("Faq not found");
 
-        return await _repository.UpdateAsync(faq, token);
+        return await _faqRepository.UpdateFaqAsync(faq, token);
     }
 }

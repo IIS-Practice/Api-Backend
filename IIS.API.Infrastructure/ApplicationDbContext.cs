@@ -11,17 +11,15 @@ public sealed class ApplicationDbContext :DbContext
 
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    {
-        Database.EnsureDeleted();   // удаляем бд со старой схемой
-        Database.EnsureCreated();   // создаем бд с новой схемой
-    }
+        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new FaqEntityTypeConfigurator());
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfigurator());
         modelBuilder.ApplyConfiguration(new ServiceEntityTypeConfigurator());
+        modelBuilder.ApplyConfiguration(new CaseEntityTypeConfigurator());
+        modelBuilder.ApplyConfiguration(new ReviewEntityTypeConfigurator());
 
         base.OnModelCreating(modelBuilder);
     }

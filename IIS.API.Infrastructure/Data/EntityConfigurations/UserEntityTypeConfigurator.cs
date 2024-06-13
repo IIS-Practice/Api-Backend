@@ -8,7 +8,7 @@ internal class UserEntityTypeConfigurator : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> UserConfigBuilder)
     {
-        UserConfigBuilder.ToTable(nameof(User));
+        UserConfigBuilder.ToTable("Users");
 
         UserConfigBuilder.HasKey(u => u.Id);
 

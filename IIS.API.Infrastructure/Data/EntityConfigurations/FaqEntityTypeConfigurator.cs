@@ -7,7 +7,7 @@ internal class FaqEntityTypeConfigurator : IEntityTypeConfiguration<Faq>
 {
     public void Configure(EntityTypeBuilder<Faq> faqConfigBuilder)
     {
-        faqConfigBuilder.ToTable(nameof(Faq));
+        faqConfigBuilder.ToTable("Faqs");
 
         faqConfigBuilder.HasKey(f => f.Id);
 

@@ -36,15 +36,15 @@ internal class ServiceRepository : IServiceRepository
 
     public async Task<Service?> FirstOrDefaultServiceAsync(Expression<Func<Service, bool>> filtres, CancellationToken token)
     {
-        return await _serviceServices.FirstOrDefaultAsync(filtres, token);
+        return await _serviceServices.AsNoTracking().FirstOrDefaultAsync(filtres, token);
     }
 
     public Task<IEnumerable<Service>> GetAllServicesAsync(Expression<Func<Service, bool>>? filtres, CancellationToken token)
     {
         if (filtres is null)
-            return Task.FromResult(_serviceServices.AsEnumerable());
+            return Task.FromResult(_serviceServices.AsNoTracking().AsEnumerable());
 
-        return Task.FromResult(_serviceServices.Where(filtres).AsEnumerable());
+        return Task.FromResult(_serviceServices.AsNoTracking().Where(filtres).AsEnumerable());
     }
 
     public async Task<Guid> UpdateServiceAsync(Service service, CancellationToken token)

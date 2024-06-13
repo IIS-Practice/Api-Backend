@@ -33,15 +33,15 @@ public sealed class FaqRepository : IFaqRepository
 
     public async Task<Faq?> FirstOrDefaultFaqAsync(Expression<Func<Faq, bool>> filtres, CancellationToken token)
     {
-        return await _faqs.FirstOrDefaultAsync(filtres, token);
+        return await _faqs.AsNoTracking().FirstOrDefaultAsync(filtres, token);
     }
 
     public Task<IEnumerable<Faq>> GetFaqsAsync(Expression<Func<Faq, bool>>? filtres, CancellationToken token)
     {
         if (filtres is null)
-            return Task.FromResult(_faqs.AsEnumerable());
+            return Task.FromResult(_faqs.AsNoTracking().AsEnumerable());
 
-        return Task.FromResult(_faqs.Where(filtres).AsEnumerable());
+        return Task.FromResult(_faqs.AsNoTracking().Where(filtres).AsEnumerable());
     }
 
     public async Task<Guid> UpdateFaqAsync(Faq faq, CancellationToken token)

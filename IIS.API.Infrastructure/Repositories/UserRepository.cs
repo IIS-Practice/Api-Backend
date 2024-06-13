@@ -34,15 +34,15 @@ public sealed class UserRepository : IUserRepository
 
     public Task<User?> FirstOrDefaultUserAsync(Expression<Func<User, bool>> filtres, CancellationToken token)
     {
-        return _users.FirstOrDefaultAsync(filtres, token);
+        return _users.AsNoTracking().FirstOrDefaultAsync(filtres, token);
     }
 
     public Task<IEnumerable<User>> GetUsersAsync(Expression<Func<User, bool>>? filtres, CancellationToken token)
     {
         if (filtres is null)
-            return Task.FromResult(_users.AsEnumerable());
+            return Task.FromResult(_users.AsNoTracking().AsEnumerable());
 
-        return Task.FromResult(_users.Where(filtres).AsEnumerable());
+        return Task.FromResult(_users.AsNoTracking().Where(filtres).AsEnumerable());
     }
 
     public async Task<Guid> UpdateUserAsync(User user, CancellationToken token)

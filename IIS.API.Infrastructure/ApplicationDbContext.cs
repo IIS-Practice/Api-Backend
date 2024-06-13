@@ -9,6 +9,7 @@ public sealed class ApplicationDbContext :DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<Service> Services => Set<Service>();
 
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {

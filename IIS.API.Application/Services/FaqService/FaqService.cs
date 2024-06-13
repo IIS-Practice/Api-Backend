@@ -57,6 +57,13 @@ internal sealed class FaqService : IFaqService
         if (existFaq == default)
             throw new KeyNotFoundException("Faq not found");
 
+        ValidationResult valirateRes = await _faqValidator.ValidateAsync(faq, token);
+
+        if (!valirateRes.IsValid)
+        {
+            throw new ValidationException(valirateRes.Errors);
+        }
+
         return await _faqRepository.UpdateFaqAsync(faq, token);
     }
 }

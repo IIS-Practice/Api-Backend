@@ -6,6 +6,7 @@ namespace IIS.API.Infrastructure;
 public sealed class ApplicationDbContext :DbContext
 {
     public DbSet<Faq> Faqs => Set<Faq>();
+    public DbSet<User> Users => Set<User>();
     public DbSet<Service> Services => Set<Service>();
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -18,6 +19,7 @@ public sealed class ApplicationDbContext :DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new FaqEntityTypeConfigurator());
+        modelBuilder.ApplyConfiguration(new UserEntityTypeConfigurator());
         modelBuilder.ApplyConfiguration(new ServiceEntityTypeConfigurator());
 
         base.OnModelCreating(modelBuilder);

@@ -8,7 +8,7 @@ internal class CreateServiceValidator : AbstractValidator<Service>
     {
         RuleFor(u => u.Name).NotNull()
             .NotEmpty().WithMessage("Name cannot be empty")
-            .MaximumLength(30).WithMessage("Name length must be at least 20");
+            .MaximumLength(30).WithMessage("Name length must be at least 30");
 
         RuleFor(s => s.Description).NotNull()
             .NotEmpty().WithMessage("Description cannot be empty");

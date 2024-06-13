@@ -25,7 +25,7 @@ internal class ServiceService : IServiceService
 
         if (!valirateRes.IsValid)
         {
-            throw new ValidationException(valirateRes.Errors);
+            throw new Common.Exceptions.ValidationException(valirateRes.Errors);
         }
 
         await _serviceRepository.AddServiceAsync(service, token);
@@ -56,9 +56,15 @@ internal class ServiceService : IServiceService
     public async Task<Guid> UpdateServiceAsync(Service service, CancellationToken token)
     {
         Service? existService = await _serviceRepository.FirstOrDefaultServiceAsync(s => s.Id == service.Id, token);
+        ValidationResult valirateRes = await _serviceValidator.ValidateAsync(service, token);
 
         if (existService == default)
             throw new KeyNotFoundException("Service not found");
+
+        if (!valirateRes.IsValid)
+        {
+            throw new Common.Exceptions.ValidationException(valirateRes.Errors);
+        }
 
         return await _serviceRepository.UpdateServiceAsync(service, token);
     }

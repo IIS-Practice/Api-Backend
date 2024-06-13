@@ -1,4 +1,5 @@
 ﻿using IIS.API.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,39 +7,33 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IIS.API.Infrastructure.Data.Seeders;
-public class ServiceSeeder
+public static class ServiceSeeder
 {
-    public static void SeedDB(ApplicationDbContext context)
+    public static void SeedServices(this EntityTypeBuilder<Service> serviceConfBuilder)
     {
-        context.Database.EnsureCreated();
-        if (!context.Services.Any())
-        {
-            var services = new List<Service>
+        serviceConfBuilder.HasData([
+            new Service()
             {
-                    new Service
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "mobile app",
-                        Description = "bla bla bla",
-                        Cost = 159m,
-                        Complexity = 5,
-                        Specialists = new List<Specialist>(), // Инициализация пустого списка
-                        Cases = new List<Case>() // Инициализация пустого списка
-                    },
-                    new Service
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "web app",
-                        Description = "bla bla",
-                        Cost = 109m,
-                        Complexity = 3,
-                        Specialists = new List<Specialist>(), // Инициализация пустого списка
-                        Cases = new List<Case>() // Инициализация пустого списка
-                    },
+                Id = Guid.NewGuid(),
+                Name = "service 1",
+                Description = "description 1",
+                Cost = 159m,
+                Complexity = 5,
+                Specialists = new List<Specialist>(),
+                Cases = new List<Case>()
+            },
+            new Service()
+            {
+                Id = Guid.NewGuid(),
+                Name = "service 2",
+                Description = "description 2",
+                Cost = 109m,
+                Complexity = 3,
+                Specialists = new List<Specialist>(),
+                Cases = new List<Case>()
+            }
+           ] );
 
-            };
-            context.AddRange(services);
-            context.SaveChanges();
-        }
+
     }
 }

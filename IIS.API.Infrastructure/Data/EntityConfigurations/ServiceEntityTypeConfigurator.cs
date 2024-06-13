@@ -1,4 +1,5 @@
 ﻿using IIS.API.Domain.Entities;
+using IIS.API.Infrastructure.Data.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -16,7 +17,7 @@ internal class ServiceEntityTypeConfigurator : IEntityTypeConfiguration<Service>
 
         serviceConfigBuilder.HasKey(s => s.Id);
 
-        serviceConfigBuilder.Property(s => s.Name).IsRequired();
+        serviceConfigBuilder.Property(s => s.Name).IsRequired().HasMaxLength(30);
         serviceConfigBuilder.Property(s => s.Description).IsRequired();
         serviceConfigBuilder.Property(s => s.Cost).IsRequired();
         serviceConfigBuilder.Property(s => s.Complexity).IsRequired();
@@ -25,14 +26,16 @@ internal class ServiceEntityTypeConfigurator : IEntityTypeConfiguration<Service>
            .WithMany(s => s.Services)
            .UsingEntity<Dictionary<string, object>>(
                "ServiceSpecialist",
-               j => j.HasOne<Specialist>().WithMany().HasForeignKey("SpecialistId"),
-               j => j.HasOne<Service>().WithMany().HasForeignKey("ServiceId"));
+               s => s.HasOne<Specialist>().WithMany().HasForeignKey("SpecialistId"),
+               s => s.HasOne<Service>().WithMany().HasForeignKey("ServiceId"));
 
         serviceConfigBuilder.HasMany(s => s.Cases)
             .WithMany(c => c.Services)
             .UsingEntity<Dictionary<string, object>>(
                 "ServiceCase",
-                j => j.HasOne<Case>().WithMany().HasForeignKey("CaseId"),
-                j => j.HasOne<Service>().WithMany().HasForeignKey("ServiceId"));
+                s => s.HasOne<Case>().WithMany().HasForeignKey("CaseId"),
+                s => s.HasOne<Service>().WithMany().HasForeignKey("ServiceId"));
+
+        serviceConfigBuilder.SeedServices();
     }
 }

@@ -3,6 +3,8 @@ using IIS.API.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IIS.API.Presentation.Controllers;
+
+
 [Route("api/[controller]")]
 [ApiController]
 public class UsersController : ControllerBase
@@ -14,7 +16,6 @@ public class UsersController : ControllerBase
         _userService = service;
     }
 
-    // GET: api/<UsersController>
     [HttpGet]
     public async Task<IActionResult> Get(CancellationToken token)
     {
@@ -23,9 +24,8 @@ public class UsersController : ControllerBase
         return Ok(response);
     }
 
-    // GET api/<UsersController>/5
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get(string id, CancellationToken token)
+    public async Task<IActionResult> Get([FromRoute] string id, CancellationToken token)
     {
         if (Guid.TryParse(id, out var userId))
         {
@@ -37,7 +37,6 @@ public class UsersController : ControllerBase
         return NotFound();
     }
 
-    // POST api/<UsersController>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] User user, CancellationToken token)
     {
@@ -46,9 +45,8 @@ public class UsersController : ControllerBase
         return Ok();
     }
 
-    // PUT api/<UsersController>/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(string id, [FromBody] User user, CancellationToken token)
+    public async Task<IActionResult> Put([FromRoute] string id, [FromBody] User user, CancellationToken token)
     {
         if (Guid.TryParse(id, out var userId))
         {
@@ -61,9 +59,8 @@ public class UsersController : ControllerBase
         return NotFound();
     }
 
-    // DELETE api/<UsersController>/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(string id, CancellationToken token)
+    public async Task<IActionResult> Delete([FromRoute] string id, CancellationToken token)
     {
         if (Guid.TryParse(id, out var userId))
         {

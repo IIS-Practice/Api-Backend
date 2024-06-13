@@ -8,7 +8,7 @@ public static class UserSeeder
     {
         userConfBuilder.HasData([
             new User() {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("68bf8340-f170-46de-ac5f-5a7f59f2103e"),
                 Name = "Name 1",
                 Surname = "Surname 1",
                 Patronymic = "Patronymic 1",
@@ -18,11 +18,11 @@ public static class UserSeeder
                 City = "City 1",
                 Country = "Country 1",
                 Password = "Qq12345678qQ",
-                DateOfBirth =DateTime.Now.AddYears(-20), //DateOnly.FromDateTime(DateTime.Now.AddYears(-20)),
+                DateOfBirth =DateTime.Now.AddYears(-20),
                 Gender = 1
         },
         new User() {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("afb6a935-00ce-45fc-95b6-5f807d92a95e"),
                 Name = "Name 2",
                 Surname = "Surname 2",
                 Patronymic = "Patronymic 2",
@@ -32,7 +32,7 @@ public static class UserSeeder
                 City = "City 2",
                 Country = "Country 2",
                 Password = "Qq12345678qQ",
-                DateOfBirth = DateTime.Now.AddYears(-50), //DateOnly.FromDateTime(DateTime.Now.AddYears(-50)),
+                DateOfBirth = DateTime.Now.AddYears(-50),
                 Gender = 2
         },
         ]);

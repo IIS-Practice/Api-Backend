@@ -15,6 +15,8 @@ public sealed class ApplicationDbContext : DbContext
 
     public DbSet<Specialist> Specialists => Set<Specialist>();
 
+    public DbSet<Case> Cases => Set<Case>();
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
 

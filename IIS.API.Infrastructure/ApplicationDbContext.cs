@@ -9,6 +9,7 @@ public sealed class ApplicationDbContext :DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<Service> Services => Set<Service>();
 
+    public DbSet<Specialist> Specialists => Set<Specialist>();
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
@@ -20,6 +21,7 @@ public sealed class ApplicationDbContext :DbContext
         modelBuilder.ApplyConfiguration(new ServiceEntityTypeConfigurator());
         modelBuilder.ApplyConfiguration(new CaseEntityTypeConfigurator());
         modelBuilder.ApplyConfiguration(new ReviewEntityTypeConfigurator());
+        modelBuilder.ApplyConfiguration(new SpecialistEntityTypeConfigurator());
 
         base.OnModelCreating(modelBuilder);
     }

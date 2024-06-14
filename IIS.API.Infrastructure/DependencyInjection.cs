@@ -1,5 +1,4 @@
-﻿using IIS.API.Application;
-using IIS.API.Domain.Abstractions;
+﻿using IIS.API.Domain.Abstractions;
 using IIS.API.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<IFaqRepository, FaqRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IServiceRepository, ServiceRepository>();
+        services.AddScoped<ISpecialistRepository, SpecialistRepository>();
 
         return services;
     }

@@ -13,14 +13,14 @@ public static class ReviewSeeder
                 Id = Guid.Parse("36F010ED-8C38-4EEB-B9EC-5FB86CCF3189"),
                 Text = "This is review 1",
                 Date = new DateTime(2024, 6, 14),
-                UserId = Guid.Parse("68ef8340-f170-46de-ac5f-5a7f59f2103e")
+                UserId = Guid.Parse("68bf8340-f170-46de-ac5f-5a7f59f2103e")
             },
             new Review
             {
                 Id = Guid.Parse("16A79D25-A4F4-4CF0-99EC-835073F0C946"),
                 Text = "This is review 2",
                 Date = new DateTime(2024, 6, 14),
-                UserId = Guid.Parse("68ef8259-f170-46de-ac5f-5a7f59f2103e")
+                UserId = Guid.Parse("68bf8340-f170-46de-ac5f-5a7f59f2103e")
             },
             new Review
             {

@@ -27,8 +27,8 @@ public class ReviewEntityTypeConfigurator : IEntityTypeConfiguration<Review>
         reviewConfigBuilder.HasOne(r => r.User)
             .WithMany()
             .HasForeignKey(r => r.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
-        //reviewConfigBuilder.SeedReviews();
+        reviewConfigBuilder.SeedReviews();
     }
 }

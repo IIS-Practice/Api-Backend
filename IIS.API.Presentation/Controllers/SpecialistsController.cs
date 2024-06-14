@@ -1,5 +1,7 @@
-﻿using IIS.API.Application.Services.SpecialistService;
+﻿using AutoMapper;
+using IIS.API.Application.Services.SpecialistService;
 using IIS.API.Domain.Entities;
+using IIS.API.Presentation.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IIS.API.Presentation.Controllers;
@@ -8,10 +10,12 @@ namespace IIS.API.Presentation.Controllers;
 public class SpecialistsController : ControllerBase
 {
     private readonly ISpecialistService _specialistService;
+    private readonly IMapper _mapper;
 
-    public SpecialistsController(ISpecialistService service)
+    public SpecialistsController(ISpecialistService service, IMapper mapper)
     {
         _specialistService = service;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -19,7 +23,7 @@ public class SpecialistsController : ControllerBase
     {
         IEnumerable<Specialist> response = await _specialistService.GetSpecialistsAsync(token);
 
-        return Ok(response);
+        return Ok(_mapper.Map<IEnumerable<SpecialistDTO>>(response));
     }
 
     [HttpGet("{id}")]
@@ -29,7 +33,7 @@ public class SpecialistsController : ControllerBase
         {
             Specialist? response = await _specialistService.GetFirstOrDefaultSpecialistAsync(f => f.Id == specialistId, token);
 
-            return response is null ? NotFound() : Ok(response);
+            return response is null ? NotFound() : Ok(_mapper.Map<SpecialistDTO>(response));
         }
 
         return NotFound();
@@ -41,6 +45,20 @@ public class SpecialistsController : ControllerBase
         await _specialistService.AddSpecialistAsync(specialist, token);
 
         return Ok();
+    }
+
+    [HttpPost("{specialistId}")]
+    public async Task<IActionResult> PostService([FromRoute] string specialistId, [FromBody] string serviceId, CancellationToken token)
+    {
+        if (Guid.TryParse(serviceId, out Guid servId) 
+            && Guid.TryParse(specialistId, out Guid specId))
+        {
+            await _specialistService.AddServiceToSpecialistAsync(specId, servId, token);
+
+            return Ok();
+        }
+
+        return NotFound();
     }
 
     [HttpPut("{id}")]

@@ -8,7 +8,7 @@ public static class SpecialistSeeder
     {
         specialistConfBuilder.HasData([
             new Specialist() {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("68bf8123-f170-46de-ac5f-5a7f59f2103e"),
                 Name = "Name 3",
                 Surname = "Surname 3",
                 Patronymic = "Patronymic 3",
@@ -23,7 +23,7 @@ public static class SpecialistSeeder
                 Position = "Position 1"
         },
         new Specialist() {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("45bf8340-f203-46de-ac5f-5a7f59f2103e"),
                 Name = "Name 4",
                 Surname = "Surname 4",
                 Patronymic = "Patronymic 4",

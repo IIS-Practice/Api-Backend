@@ -8,11 +8,13 @@ namespace IIS.API.Application.Services.SpecialistService;
 internal sealed class SpecialistService : ISpecialistService
 {
     private readonly ISpecialistRepository _specialistRepository;
+    private readonly IServiceRepository _serviceRepository;
     private readonly AbstractValidator<Specialist> _specialistValidator;
 
-    public SpecialistService(ISpecialistRepository specialistRepository)
+    public SpecialistService(ISpecialistRepository specialistRepository, IServiceRepository serviceRepository)
     {
         _specialistRepository = specialistRepository;
+        _serviceRepository = serviceRepository;
         _specialistValidator = new CreateSpecialistValidator();
     }
 
@@ -45,7 +47,7 @@ internal sealed class SpecialistService : ISpecialistService
 
     public Task<IEnumerable<Specialist>> GetSpecialistsAsync(CancellationToken token)
     {
-        return _specialistRepository.GetSpecialistsAsync(null, token);
+        return _specialistRepository.GetSpecialistsAsync(null, token, s => s.Services);
     }
 
     public async Task<Guid> UpdateSpecialistAsync(Specialist specialist, CancellationToken token)
@@ -63,5 +65,20 @@ internal sealed class SpecialistService : ISpecialistService
         }
 
         return await _specialistRepository.UpdateSpecialistAsync(specialist, token);
+    }
+
+    public async Task AddServiceToSpecialistAsync(Guid specialistId, Guid serviceId, CancellationToken token)
+    {
+        Specialist? specialist = await _specialistRepository.FirstOrDefaultSpecialistAsync(s => s.Id == specialistId, token);
+
+        if (specialist == default)
+            throw new KeyNotFoundException("Specialist not found");
+
+        Service? service = await _serviceRepository.FirstOrDefaultServiceAsync(s => s.Id == serviceId, token);
+
+        if (service == default)
+            throw new KeyNotFoundException("Service not found");
+
+        await _specialistRepository.AddServiceToSpecialistAsync(specialist, service, token);
     }
 }

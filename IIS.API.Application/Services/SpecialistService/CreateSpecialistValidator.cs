@@ -47,7 +47,7 @@ public class CreateSpecialistValidator : AbstractValidator<Specialist>
             .LessThan(3).WithMessage("Gender must be less than 3");
 
         RuleFor(s => s.PhoneNumber).NotNull()
-            .Matches(@"^\+375\s\([29|33]\)\s\d{3}-\d{2}-\d{2}$").WithMessage("The phone number does not match the pattern. Example: +375 (29/33) 111-11-11");
+            .Matches(@"^\+375\s\((29|33|25|44)\)\s\d{3}-\d{2}-\d{2}$").WithMessage("The phone number does not match the pattern. Example: +375 (29/33/25/44) 111-11-11");
 
         RuleFor(s => s.Position).NotNull()
             .NotEmpty().WithMessage("Position cannot be empty");

@@ -13,4 +13,6 @@ public interface ISpecialistService
     public Task<IEnumerable<Specialist>> GetSpecialistsAsync(CancellationToken token);
 
     public Task<Specialist?> GetFirstOrDefaultSpecialistAsync(Expression<Func<Specialist, bool>> predicate, CancellationToken token);
+
+    public Task AddServiceToSpecialistAsync(Guid specialistId, Guid serviceId, CancellationToken token);
 }

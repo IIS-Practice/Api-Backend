@@ -21,7 +21,7 @@ public sealed class ApplicationDbContext :DbContext
         modelBuilder.ApplyConfiguration(new ServiceEntityTypeConfigurator());
         modelBuilder.ApplyConfiguration(new CaseEntityTypeConfigurator());
         modelBuilder.ApplyConfiguration(new ReviewEntityTypeConfigurator());
-        modelBuilder.ApplyConfiguration(new  SpecialistEntityTypeConfigurator());
+        modelBuilder.ApplyConfiguration(new SpecialistEntityTypeConfigurator());
 
         base.OnModelCreating(modelBuilder);
     }

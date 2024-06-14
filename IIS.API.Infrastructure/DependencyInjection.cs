@@ -17,10 +17,10 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(cfg => cfg.UseSqlServer(connectionString));
 
         services.AddScoped<IFaqRepository, FaqRepository>();
-<<<<<<< HEAD
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IServiceRepository, ServiceRepository>();
+        services.AddScoped<ISpecialistRepository, SpecialistRepository>();
         services.AddScoped<IReviewRepository, ReviewRepository>();
-=======
->>>>>>> ca833e6f962c233dac3e5263e43caf94c355e2d0
 
         return services;
     }

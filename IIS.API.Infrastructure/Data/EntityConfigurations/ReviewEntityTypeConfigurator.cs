@@ -1,4 +1,5 @@
-﻿using IIS.API.Domain.Entities;
+﻿
+using IIS.API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +9,7 @@ public class ReviewEntityTypeConfigurator : IEntityTypeConfiguration<Review>
 {
     public void Configure(EntityTypeBuilder<Review> reviewConfigBuilder)
     {
-        reviewConfigBuilder.ToTable(nameof(Review));
+        reviewConfigBuilder.ToTable("Reviews");
 
         reviewConfigBuilder.HasKey(r => r.Id);
 

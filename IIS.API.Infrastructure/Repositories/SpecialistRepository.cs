@@ -43,9 +43,9 @@ public sealed class SpecialistRepository : ISpecialistRepository
                                                                 CancellationToken token, 
                                                                 params Expression<Func<Specialist, object>>[]? includesProperties)
     {
-        IQueryable<Specialist> query = _specialists.AsQueryable();
+        IQueryable<Specialist> query = _specialists.AsNoTracking().AsQueryable();
 
-        if (includesProperties is not null && includesProperties.Any())
+        if (includesProperties is not null && includesProperties.Length != 0)
         {
             foreach (var property in includesProperties)
             {
@@ -60,9 +60,9 @@ public sealed class SpecialistRepository : ISpecialistRepository
                                                                 CancellationToken token, 
                                                                 params Expression<Func<Specialist, object>>[]? includesProperties)
     {
-        IQueryable<Specialist> query = _specialists.AsQueryable();
+        IQueryable<Specialist> query = _specialists.AsNoTracking().AsQueryable();
 
-        if (includesProperties is not null && includesProperties.Any())
+        if (includesProperties is not null && includesProperties.Length != 0)
         {
             foreach (var property in includesProperties)
             {

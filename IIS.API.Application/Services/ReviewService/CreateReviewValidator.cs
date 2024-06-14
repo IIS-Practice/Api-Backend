@@ -17,7 +17,7 @@ internal class CreateReviewValidator : AbstractValidator<Review>
             .WithMessage("Review date cannot be empty.")
             .NotNull()
             .WithMessage("Review date cannot be null.")
-            .LessThanOrEqualTo(r => DateOnly.FromDateTime(DateTime.UtcNow));
+            .LessThanOrEqualTo(r => DateTime.UtcNow);
 
 
         RuleFor(r => r.UserId)

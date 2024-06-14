@@ -1,5 +1,7 @@
-﻿using IIS.API.Application.Services.ReviewService;
+﻿using AutoMapper;
+using IIS.API.Application.Services.ReviewService;
 using IIS.API.Domain.Entities;
+using IIS.API.Presentation.Common.Models.Review;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IIS.API.Presentation.Controllers;
@@ -9,17 +11,21 @@ namespace IIS.API.Presentation.Controllers;
 public sealed class ReviewsController : ControllerBase
 {
     private readonly IReviewService _reviewService;
+    private readonly IMapper _mapper;
 
-    public ReviewsController(IReviewService service)
+    public ReviewsController(IReviewService service, IMapper mapper)
     {
         _reviewService = service;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public async Task<IActionResult> Get(CancellationToken token)
     {
         IEnumerable<Review> response = await _reviewService.GetReviewsAsync(token);
-        return Ok(response);
+
+        var reviewDTOs = _mapper.Map<IEnumerable<ReviewDTO>>(response);
+        return Ok(reviewDTOs);
     }
 
     [HttpGet("{id}")]
@@ -27,28 +33,43 @@ public sealed class ReviewsController : ControllerBase
     {
         if (Guid.TryParse(id, out var reviewId))
         {
-            Review? response = await _reviewService.GetFirstOrDefaultReviewAsync(r => r.Id == reviewId, token);
-            return response is null ? NotFound() : Ok(response);
+            var response = await _reviewService.GetFirstOrDefaultReviewAsync(r => r.Id == reviewId, token);
+
+            if (response is null)
+            {
+                return NotFound();
+            }
+            
+            var reviewDTO = _mapper.Map<ReviewDTO>(response);
+
+            return Ok(reviewDTO);
         }
         return NotFound();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] Review review, CancellationToken token)
+    public async Task<IActionResult> Post([FromBody] ReviewRequestDTO reviewRequestDTO, CancellationToken token)
     {
+        var review = _mapper.Map<Review>(reviewRequestDTO);
+
         await _reviewService.AddReviewAsync(review, token);
-        return Ok();
+        
+        return NoContent();
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put([FromRoute] string id, [FromBody] Review review, CancellationToken token)
+    public async Task<IActionResult> Put([FromRoute] string id, [FromBody] ReviewRequestDTO reviewRequestDTO, CancellationToken token)
     {
         if (Guid.TryParse(id, out var reviewId))
         {
+            var review = _mapper.Map<Review>(reviewRequestDTO);
             review.Id = reviewId;
+            
             await _reviewService.UpdateReviewAsync(review, token);
-            return Ok();
+            
+            return NoContent();
         }
+
         return NotFound();
     }
 
@@ -58,7 +79,8 @@ public sealed class ReviewsController : ControllerBase
         if (Guid.TryParse(id, out var reviewId))
         {
             await _reviewService.DeleteReviewAsync(reviewId, token);
-            return Ok();
+
+            return NoContent();
         }
         return NotFound();
     }

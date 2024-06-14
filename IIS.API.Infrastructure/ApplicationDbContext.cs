@@ -6,8 +6,11 @@ namespace IIS.API.Infrastructure;
 public sealed class ApplicationDbContext : DbContext
 {
     public DbSet<Faq> Faqs => Set<Faq>();
+
     public DbSet<User> Users => Set<User>();
+    
     public DbSet<Service> Services => Set<Service>();
+    
     public DbSet<Review> Reviews => Set<Review>();
 
     public DbSet<Specialist> Specialists => Set<Specialist>();
@@ -23,7 +26,6 @@ public sealed class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new CaseEntityTypeConfigurator());
         modelBuilder.ApplyConfiguration(new ReviewEntityTypeConfigurator());
         modelBuilder.ApplyConfiguration(new SpecialistEntityTypeConfigurator());
-        modelBuilder.ApplyConfiguration(new ReviewEntityTypeConfigurator());
 
         base.OnModelCreating(modelBuilder);
     }

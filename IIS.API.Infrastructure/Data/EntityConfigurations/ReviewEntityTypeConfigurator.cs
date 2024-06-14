@@ -1,5 +1,6 @@
 ﻿
 using IIS.API.Domain.Entities;
+using IIS.API.Infrastructure.Data.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -26,6 +27,8 @@ public class ReviewEntityTypeConfigurator : IEntityTypeConfiguration<Review>
         reviewConfigBuilder.HasOne(r => r.User)
             .WithMany()
             .HasForeignKey(r => r.UserId)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.Restrict);
+
+        //reviewConfigBuilder.SeedReviews();
     }
 }

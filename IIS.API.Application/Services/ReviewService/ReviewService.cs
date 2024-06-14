@@ -10,12 +10,13 @@ internal sealed class ReviewService : IReviewService
 {
     private readonly IReviewRepository _reviewRepository;
     private readonly AbstractValidator<Review> _validator;
-    //private readonly IUserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
 
-    public ReviewService(IReviewRepository repository)
+    public ReviewService(IReviewRepository repository, IUserRepository userRepository)
     {
         _reviewRepository = repository;
         _validator = new CreateReviewValidator();
+        _userRepository = userRepository;
     }
 
     public async Task<Guid> AddReviewAsync(Review review, CancellationToken token)
@@ -59,11 +60,10 @@ internal sealed class ReviewService : IReviewService
         if (existReview == default)
             throw new KeyNotFoundException("Review not found");
 
-        //TODO:
-        //var user = await _userRepository.FirstOrDefaultAsync(u => u.Id == review.UserId, token);
+        var user = await _userRepository.FirstOrDefaultUserAsync(u => u.Id == review.UserId, token);
 
-        //if (user == default)
-        //    throw new KeyNotFoundException("User not found");
+        if (user == default)
+            throw new KeyNotFoundException("User not found");
 
         await _reviewRepository.UpdateReviewAsync(review, token);
 

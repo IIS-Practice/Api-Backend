@@ -6,6 +6,7 @@ public static class UserSeeder
 {
     public static void SeedUsers(this EntityTypeBuilder<User> userConfBuilder)
     {
+        // при изменении id пользователя изменить id пользователя в ReviewSeeder
         userConfBuilder.HasData([
             new User() {
                 Id = Guid.Parse("68bf8340-f170-46de-ac5f-5a7f59f2103e"),

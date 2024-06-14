@@ -8,23 +8,24 @@ namespace IIS.API.Infrastructure.Repositories;
 public sealed class ReviewRepository : IReviewRepository
 {
     private readonly DbSet<Review> _reviews;
-    //private readonly DbSet<User> _users;
+    private readonly DbSet<User> _users;
     private readonly ApplicationDbContext _context;
 
     public ReviewRepository(ApplicationDbContext context)
     {
         _context = context;
         _reviews = context.Reviews;
-        //_users = context.Users;
+        _users = context.Users;
     }
 
     public async Task<Guid> AddReviewAsync(Review review, CancellationToken token)
     {
         review.Id = Guid.NewGuid();
 
-        //_users.Where(u => u.Id == review.UserId).Load();
+        _users.Where(u => u.Id == review.UserId).Load();
 
         await _reviews.AddAsync(review, token);
+
         await _context.SaveChangesAsync(token);
 
         return review.Id;
@@ -40,10 +41,10 @@ public sealed class ReviewRepository : IReviewRepository
     {
         var review = await _reviews.AsNoTracking().FirstOrDefaultAsync(filters, token);
 
-        //if (review is not null)
-        //{
-        //    review.User = _users.AsNoTracking().Where(u => u.Id == review.UserId).Single();
-        //}
+        if (review is not null)
+        {
+            review.User = _users.AsNoTracking().Where(u => u.Id == review.UserId).Single();
+        }
 
         return review;
     }
@@ -52,21 +53,21 @@ public sealed class ReviewRepository : IReviewRepository
     {
         if (filters is null)
         {
-            //_users.Load();
+            _users.Load();
             return Task.FromResult(_reviews.AsEnumerable());
         }
 
         var reviews = _reviews.Where(filters);
 
         // загрузка пользователей, отзывы которых соответствуют фильтру
-        //_users.Where(u => reviews.Any(r => r.UserId == u.Id)).Load();
-        
+        _users.Where(u => reviews.Any(r => r.UserId == u.Id)).Load();
+
         return Task.FromResult(reviews.AsEnumerable());
     }
 
     public async Task<Guid> UpdateReviewAsync(Review review, CancellationToken token)
     {
-        //_users.Where(u => u.Id == review.UserId).Load();
+        _users.Where(u => u.Id == review.UserId).Load();
 
         _reviews.Update(review);
 

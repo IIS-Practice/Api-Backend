@@ -4,6 +4,7 @@ using IIS.API.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IIS.API.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240616090344_DefaultDateForApplication")]
+    partial class DefaultDateForApplication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -346,7 +349,7 @@ namespace IIS.API.Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ServiceCases", (string)null);
+                    b.ToTable("ServiceCases");
                 });
 
             modelBuilder.Entity("ServiceSpecialists", b =>
@@ -361,7 +364,7 @@ namespace IIS.API.Infrastructure.Migrations
 
                     b.HasIndex("SpecialistId");
 
-                    b.ToTable("ServiceSpecialists", (string)null);
+                    b.ToTable("ServiceSpecialists");
                 });
 
             modelBuilder.Entity("IIS.API.Domain.Entities.Specialist", b =>

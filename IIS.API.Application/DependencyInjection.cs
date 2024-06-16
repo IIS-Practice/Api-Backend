@@ -5,6 +5,7 @@ using IIS.API.Application.Services.ServiceService;
 
 using IIS.API.Application.Services.ReviewService;
 using Microsoft.Extensions.DependencyInjection;
+using IIS.API.Application.Services.ApplicationService;
 
 namespace IIS.API.Application;
 
@@ -16,7 +17,8 @@ public static class DependencyInjection
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IServiceService, ServiceService>();
         services.AddScoped<ISpecialistService, SpecialistService>();
-        services.AddScoped<IReviewService, ReviewService>();   
+        services.AddScoped<IReviewService, ReviewService>();
+        services.AddScoped<IApplicationService, ApplicationService>();
 
         return services;
     }

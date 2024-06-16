@@ -19,4 +19,14 @@ public class CaseDTO
     required public int Complexity { get; set; }
 
     public List<ReviewDTO> Reviews { get; set; } = [];
+
+    public List<InnerServiceDTO> Services { get; set; } = [];
+
+    public class InnerServiceDTO
+    {
+        required public Guid Id { get; set; }
+
+        required public string Name { get; set; }
+    }
+
 }

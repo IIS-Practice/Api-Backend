@@ -4,8 +4,6 @@ public class ReviewRequestDTO
 {
     required public string Text { get; set; }
 
-    required public DateTime Date { get; set; }
-
     required public Guid UserId { get; set; }
 }
 

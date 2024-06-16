@@ -4,6 +4,8 @@ using IIS.API.Domain.Abstractions;
 using IIS.API.Domain.Entities;
 using System.Linq.Expressions;
 
+using ValidationException = IIS.API.Application.Common.Exceptions.ValidationException;
+
 namespace IIS.API.Application.Services.SpecialistService;
 internal sealed class SpecialistService : ISpecialistService
 {
@@ -24,7 +26,7 @@ internal sealed class SpecialistService : ISpecialistService
 
         if (!valRes.IsValid)
         {
-            throw new Common.Exceptions.ValidationException(valRes.Errors);
+            throw new ValidationException(valRes.Errors);
         }
 
         return await _specialistRepository.AddSpecialistAsync(specialist, token);
@@ -42,7 +44,7 @@ internal sealed class SpecialistService : ISpecialistService
 
     public Task<Specialist?> GetFirstOrDefaultSpecialistAsync(Expression<Func<Specialist, bool>> predicate, CancellationToken token)
     {
-        return _specialistRepository.FirstOrDefaultSpecialistAsync(predicate, token);
+        return _specialistRepository.FirstOrDefaultSpecialistAsync(predicate, token, s => s.Services);
     }
 
     public Task<IEnumerable<Specialist>> GetSpecialistsAsync(CancellationToken token)
@@ -61,7 +63,7 @@ internal sealed class SpecialistService : ISpecialistService
 
         if (!valRes.IsValid)
         {
-            throw new Common.Exceptions.ValidationException(valRes.Errors);
+            throw new ValidationException(valRes.Errors);
         }
 
         return await _specialistRepository.UpdateSpecialistAsync(specialist, token);

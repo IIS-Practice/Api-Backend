@@ -1,10 +1,10 @@
-﻿
-using IIS.API.Application.Services.FaqService;
+﻿using AutoMapper;
 using IIS.API.Application.Services.ServiceService;
 using IIS.API.Domain.Entities;
+using IIS.API.Presentation.Common.Models.Service;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace IIS.API.Presentation.Controllers;
 [Route("api/[controller]")]
@@ -12,59 +12,78 @@ namespace IIS.API.Presentation.Controllers;
 public class ServicesController : ControllerBase
 {
     private readonly IServiceService _serviceService;
-    public ServicesController(IServiceService serviceService)
+    private readonly IMapper _mapper;
+    public ServicesController(IServiceService serviceService, IMapper mapper)
     {
         _serviceService = serviceService;
+        _mapper = mapper;
     }
 
-    // GET: api/<ServicesController>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<ServiceDTO>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Get(CancellationToken token)
     {
-        IEnumerable<Service> response = await _serviceService.GetServicesAsync(token);
+        IEnumerable<Service> data = await _serviceService.GetServicesAsync(token);
+
+        IEnumerable<ServiceDTO> response = _mapper.Map<IEnumerable<ServiceDTO>>(data);
 
         return Ok(response);
     }
 
-    // GET api/<ServicesController>/5
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(ServiceDTO), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Get([FromRoute] string id, CancellationToken token)
     {
         if (Guid.TryParse(id, out var serviceId))
         {
             Service? response = await _serviceService.GetFirstOrDefaultServiceAsync(s => s.Id == serviceId, token);
 
-            return response is null ? NotFound() : Ok(response);
+            return response is null ? NotFound() : Ok(_mapper.Map<ServiceDTO>(response));
         }
 
         return NotFound();
     }
 
-    // POST api/<ServicesController>
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] Service service, CancellationToken token)
+    public async Task<IActionResult> Post([FromBody] ServiceRequestDTO serviceDTO, CancellationToken token)
     {
+        Service service = _mapper.Map<Service>(serviceDTO);
+
         await _serviceService.AddServiceAsync(service, token);
 
-        return Ok();
+        return NoContent();
     }
 
-    // PUT api/<ServicesController>/5
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put([FromRoute] string id, [FromBody] Service service, CancellationToken token)
+    [HttpPost("{serviceId}")]
+    public async Task<IActionResult> PostCase([FromRoute] string serviceId, [FromBody] string caseId, CancellationToken token)
     {
+        if (Guid.TryParse(serviceId, out Guid servId)
+                && Guid.TryParse(caseId, out Guid casId))
+        {
+            await _serviceService.AddCaseToServiceAsync(servId, casId, token);
+
+            return NoContent();
+        }
+
+        return NotFound();
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put([FromRoute] string id, [FromBody] ServiceRequestDTO serviceDTO, CancellationToken token)
+    {
+        Service service = _mapper.Map<Service>(serviceDTO);
+
         if (Guid.TryParse(id, out var serviceId))
         {
             service.Id = serviceId;
             await _serviceService.UpdateServiceAsync(service, token);
 
-            return Ok();
+            return NoContent();
         }
 
         return NotFound();
     }
 
-    // DELETE api/<ServicesController>/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete([FromRoute] string id, CancellationToken token)
     {
@@ -72,7 +91,7 @@ public class ServicesController : ControllerBase
         {
             await _serviceService.DeleteServiceAsync(serviceId, token);
 
-            return Ok();
+            return NoContent();
         }
 
         return NotFound();

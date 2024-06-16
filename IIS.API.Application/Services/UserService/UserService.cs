@@ -4,6 +4,8 @@ using IIS.API.Domain.Abstractions;
 using IIS.API.Domain.Entities;
 using System.Linq.Expressions;
 
+using ValidationException = IIS.API.Application.Common.Exceptions.ValidationException;
+
 namespace IIS.API.Application.Services.UserService;
 public sealed class UserService : IUserService
 {
@@ -22,7 +24,7 @@ public sealed class UserService : IUserService
 
         if (!valRes.IsValid)
         {
-            throw new Common.Exceptions.ValidationException(valRes.Errors);
+            throw new ValidationException(valRes.Errors);
         }
 
         await _userRepository.AddUserAsync(user, token);
@@ -61,7 +63,7 @@ public sealed class UserService : IUserService
 
         if (!valRes.IsValid)
         {
-            throw new Common.Exceptions.ValidationException(valRes.Errors);
+            throw new ValidationException(valRes.Errors);
         }
 
         return await _userRepository.UpdateUserAsync(user, token);

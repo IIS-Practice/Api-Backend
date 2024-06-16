@@ -1,11 +1,8 @@
 ﻿using IIS.API.Application.Services.ApplicationService;
-using IIS.API.Application.Services.UserService;
-using IIS.API.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 using DomainApplication = IIS.API.Domain.Entities.Application;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace IIS.API.Presentation.Controllers;
 [Route("api/[controller]")]
@@ -18,7 +15,7 @@ public class ApplicationsController : ControllerBase
     {
         _applicationService = applicationService;
     }
-    // GET: api/<ApplicationsController>
+
     [HttpGet]
     public async Task<IActionResult> Get(CancellationToken token)
     {
@@ -27,7 +24,6 @@ public class ApplicationsController : ControllerBase
         return Ok(response);
     }
 
-    // GET api/<ApplicationsController>/5
     [HttpGet("{id}")]
     public async Task<IActionResult> Get([FromRoute] string id, CancellationToken token)
     {
@@ -41,7 +37,6 @@ public class ApplicationsController : ControllerBase
         return NotFound();
     }
 
-    // POST api/<ApplicationsController>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] DomainApplication application, CancellationToken token)
     {
@@ -50,7 +45,6 @@ public class ApplicationsController : ControllerBase
         return Ok();
     }
 
-    // PUT api/<ApplicationsController>/5
     [HttpPut("{id}")]
     public async Task<IActionResult> Put([FromRoute] string id, [FromBody] DomainApplication application, CancellationToken token)
     {
@@ -65,7 +59,6 @@ public class ApplicationsController : ControllerBase
         return NotFound();
     }
 
-    // DELETE api/<ApplicationsController>/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete([FromRoute] string id, CancellationToken token)
     {

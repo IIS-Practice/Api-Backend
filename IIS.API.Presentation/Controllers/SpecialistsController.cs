@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using IIS.API.Application.Services.SpecialistService;
 using IIS.API.Domain.Entities;
-using IIS.API.Presentation.Common.Models;
+using IIS.API.Presentation.Common.Models.Review;
+using IIS.API.Presentation.Common.Models.Specialist;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace IIS.API.Presentation.Controllers;
 [Route("api/[controller]")]
@@ -19,6 +21,7 @@ public class SpecialistsController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<SpecialistDTO>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Get(CancellationToken token)
     {
         IEnumerable<Specialist> response = await _specialistService.GetSpecialistsAsync(token);
@@ -27,6 +30,7 @@ public class SpecialistsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(SpecialistDTO), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Get([FromRoute] string id, CancellationToken token)
     {
         if (Guid.TryParse(id, out var specialistId))
@@ -40,36 +44,40 @@ public class SpecialistsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] Specialist specialist, CancellationToken token)
+    public async Task<IActionResult> Post([FromBody] SpecialistRequestDTO specialistDTO, CancellationToken token)
     {
+        Specialist specialist = _mapper.Map<Specialist>(specialistDTO);
+
         await _specialistService.AddSpecialistAsync(specialist, token);
 
-        return Ok();
+        return NoContent();
     }
 
     [HttpPost("{specialistId}")]
     public async Task<IActionResult> PostService([FromRoute] string specialistId, [FromBody] string serviceId, CancellationToken token)
     {
         if (Guid.TryParse(serviceId, out Guid servId) 
-            && Guid.TryParse(specialistId, out Guid specId))
+                && Guid.TryParse(specialistId, out Guid specId))
         {
             await _specialistService.AddServiceToSpecialistAsync(specId, servId, token);
 
-            return Ok();
+            return NoContent();
         }
 
         return NotFound();
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put([FromRoute] string id, [FromBody] Specialist specialist, CancellationToken token)
+    public async Task<IActionResult> Put([FromRoute] string id, [FromBody] SpecialistRequestDTO specialistDTO, CancellationToken token)
     {
+        Specialist specialist = _mapper.Map<Specialist>(specialistDTO);
+
         if (Guid.TryParse(id, out var specialistId))
         {
             specialist.Id = specialistId;
             await _specialistService.UpdateSpecialistAsync(specialist, token);
 
-            return Ok();
+            return NoContent();
         }
 
         return NotFound();
@@ -82,7 +90,7 @@ public class SpecialistsController : ControllerBase
         {
             await _specialistService.DeleteSpecialistAsync(specialistId, token);
 
-            return Ok();
+            return NoContent();
         }
 
         return NotFound();

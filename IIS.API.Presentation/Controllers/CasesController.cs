@@ -3,6 +3,7 @@ using IIS.API.Application.Services.CaseService;
 using IIS.API.Domain.Entities;
 using IIS.API.Presentation.Common.Models.Case;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace IIS.API.Presentation.Controllers;
 [Route("api/[controller]")]
@@ -19,6 +20,7 @@ public class CasesController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<CaseDTO>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Get(CancellationToken token)
     {
         IEnumerable<Case> response = await _caseService.GetCasesAsync(token);
@@ -28,6 +30,7 @@ public class CasesController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(CaseDTO), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Get([FromRoute] string id, CancellationToken token)
     {
         if (Guid.TryParse(id, out var caseId))

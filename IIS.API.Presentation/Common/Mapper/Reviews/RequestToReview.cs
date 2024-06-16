@@ -11,8 +11,6 @@ public class RequestToReview : Profile
         CreateMap<ReviewRequestDTO, Review>()
             .ForMember(review => review.Text,
                 opt => opt.MapFrom(reviewRequestDTO => reviewRequestDTO.Text))
-            .ForMember(review => review.Date,
-                opt => opt.MapFrom(reviewRequestDTO => reviewRequestDTO.Date))
             .ForMember(review => review.UserId,
                 opt => opt.MapFrom(reviewRequestDTO => reviewRequestDTO.UserId));
     }

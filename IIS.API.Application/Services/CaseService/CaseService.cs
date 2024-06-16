@@ -4,6 +4,8 @@ using IIS.API.Domain.Abstractions;
 using IIS.API.Domain.Entities;
 using System.Linq.Expressions;
 
+using ValidationException = IIS.API.Application.Common.Exceptions.ValidationException;
+
 namespace IIS.API.Application.Services.CaseService;
 internal sealed class CaseService : ICaseService
 {
@@ -25,7 +27,7 @@ internal sealed class CaseService : ICaseService
 
         if (!valRes.IsValid)
         {
-            throw new Common.Exceptions.ValidationException(valRes.Errors);
+            throw new ValidationException(valRes.Errors);
         }
 
         return _caseRepository.AddCaseAsync(@case, token);
@@ -78,7 +80,7 @@ internal sealed class CaseService : ICaseService
 
         if (!valRes.IsValid)
         {
-            throw new Common.Exceptions.ValidationException(valRes.Errors);
+            throw new ValidationException(valRes.Errors);
         }
 
         return _caseRepository.UpdateCaseAsync(@case, token);

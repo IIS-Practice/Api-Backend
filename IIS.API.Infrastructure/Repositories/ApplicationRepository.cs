@@ -1,12 +1,6 @@
 ﻿using IIS.API.Domain.Abstractions;
-using IIS.API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 using DomainApplication = IIS.API.Domain.Entities.Application;
 
@@ -25,6 +19,7 @@ internal class ApplicationRepository : IApplicationRepository
     {
         application.Id = Guid.NewGuid();
         application.NormalizedEmail = application.Email.ToLower();
+        application.Date = DateTime.UtcNow;
 
         await _applications.AddAsync(application, token);
         await _context.SaveChangesAsync(token);
@@ -54,6 +49,7 @@ internal class ApplicationRepository : IApplicationRepository
     public async Task<Guid> UpdateApplicationAsync(DomainApplication application, CancellationToken token)
     {
         application.NormalizedEmail = application.Email.ToLower();
+        application.Date = DateTime.UtcNow;
 
         _applications.Update(application);
         await _context.SaveChangesAsync(token);

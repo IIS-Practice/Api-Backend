@@ -5,15 +5,19 @@ using Microsoft.EntityFrameworkCore;
 using DomainApplication = IIS.API.Domain.Entities.Application;
 
 namespace IIS.API.Infrastructure;
-public sealed class ApplicationDbContext :DbContext
+public sealed class ApplicationDbContext : DbContext
 {
     public DbSet<Faq> Faqs => Set<Faq>();
-    public DbSet<User> Users => Set<User>();
-    public DbSet<Service> Services => Set<Service>();
-    public DbSet<Review> Reviews => Set<Review>();
-    public DbSet<Specialist> Specialists => Set<Specialist>();
-    public DbSet<DomainApplication> Applications => Set<DomainApplication>();
 
+    public DbSet<User> Users => Set<User>();
+
+    public DbSet<Service> Services => Set<Service>();
+
+    public DbSet<Review> Reviews => Set<Review>();
+
+    public DbSet<Specialist> Specialists => Set<Specialist>();
+
+    public DbSet<DomainApplication> Applications => Set<DomainApplication>();
 
     public DbSet<Case> Cases => Set<Case>();
 
@@ -28,6 +32,7 @@ public sealed class ApplicationDbContext :DbContext
         modelBuilder.ApplyConfiguration(new CaseEntityTypeConfigurator());
         modelBuilder.ApplyConfiguration(new ReviewEntityTypeConfigurator());
         modelBuilder.ApplyConfiguration(new ApplicationEntityTypeConfigurator());
+        modelBuilder.ApplyConfiguration(new SpecialistEntityTypeConfigurator());
 
         base.OnModelCreating(modelBuilder);
     }

@@ -4,6 +4,7 @@ using IIS.API.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IIS.API.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240615134636_AddAplication")]
+    partial class AddAplication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,9 +37,7 @@ namespace IIS.API.Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("Date")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 6, 16, 12, 3, 43, 800, DateTimeKind.Local).AddTicks(9964));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -64,7 +65,7 @@ namespace IIS.API.Infrastructure.Migrations
                         {
                             Id = new Guid("68bf8340-f170-46de-ac5f-5a7f59f2103e"),
                             Author = "Author 1",
-                            Date = new DateTime(2024, 6, 16, 12, 3, 43, 801, DateTimeKind.Local).AddTicks(919),
+                            Date = new DateTime(2024, 6, 15, 16, 46, 35, 417, DateTimeKind.Local).AddTicks(3075),
                             Description = "Description 1",
                             Email = "email1@gmail.com",
                             NormalizedEmail = "email1@gmail.com",
@@ -74,7 +75,7 @@ namespace IIS.API.Infrastructure.Migrations
                         {
                             Id = new Guid("afb6a935-00ce-45fc-95b6-5f807d92a95e"),
                             Author = "Author 2",
-                            Date = new DateTime(2024, 6, 16, 12, 3, 43, 801, DateTimeKind.Local).AddTicks(922),
+                            Date = new DateTime(2024, 6, 15, 16, 46, 35, 417, DateTimeKind.Local).AddTicks(3086),
                             Description = "Description 2",
                             Email = "email2@gmail.com",
                             NormalizedEmail = "email2@gmail.com",
@@ -215,7 +216,7 @@ namespace IIS.API.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ebad6638-35ac-4ff6-a1fd-5f8ecab9ef8c"),
+                            Id = new Guid("2e8b35c1-20cc-41c1-8665-447f404467f8"),
                             Complexity = 5,
                             Cost = 159m,
                             Description = "description 1",
@@ -223,7 +224,7 @@ namespace IIS.API.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e6de481b-aeaa-4911-940c-770b1b728b90"),
+                            Id = new Guid("0d0a0af4-b852-4f12-bc4c-c827d264a53b"),
                             Complexity = 3,
                             Cost = 109m,
                             Description = "description 2",
@@ -307,7 +308,7 @@ namespace IIS.API.Infrastructure.Migrations
                             Id = new Guid("68bf8340-f170-46de-ac5f-5a7f59f2103e"),
                             City = "City 1",
                             Country = "Country 1",
-                            DateOfBirth = new DateTime(2004, 6, 16, 12, 3, 43, 794, DateTimeKind.Local).AddTicks(7546),
+                            DateOfBirth = new DateTime(2004, 6, 15, 16, 46, 35, 412, DateTimeKind.Local).AddTicks(9143),
                             Email = "email1@gmail.com",
                             Gender = 1,
                             Name = "Name 1",
@@ -322,7 +323,7 @@ namespace IIS.API.Infrastructure.Migrations
                             Id = new Guid("afb6a935-00ce-45fc-95b6-5f807d92a95e"),
                             City = "City 2",
                             Country = "Country 2",
-                            DateOfBirth = new DateTime(1974, 6, 16, 12, 3, 43, 794, DateTimeKind.Local).AddTicks(7576),
+                            DateOfBirth = new DateTime(1974, 6, 15, 16, 46, 35, 412, DateTimeKind.Local).AddTicks(9168),
                             Email = "email2@gmail.com",
                             Gender = 2,
                             Name = "Name 2",
@@ -346,7 +347,7 @@ namespace IIS.API.Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ServiceCases", (string)null);
+                    b.ToTable("ServiceCases");
                 });
 
             modelBuilder.Entity("ServiceSpecialists", b =>
@@ -361,7 +362,7 @@ namespace IIS.API.Infrastructure.Migrations
 
                     b.HasIndex("SpecialistId");
 
-                    b.ToTable("ServiceSpecialists", (string)null);
+                    b.ToTable("ServiceSpecialists");
                 });
 
             modelBuilder.Entity("IIS.API.Domain.Entities.Specialist", b =>

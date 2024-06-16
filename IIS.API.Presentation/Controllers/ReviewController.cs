@@ -3,6 +3,7 @@ using IIS.API.Application.Services.ReviewService;
 using IIS.API.Domain.Entities;
 using IIS.API.Presentation.Common.Models.Review;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace IIS.API.Presentation.Controllers;
 
@@ -20,6 +21,7 @@ public sealed class ReviewsController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<ReviewDTO>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Get(CancellationToken token)
     {
         IEnumerable<Review> response = await _reviewService.GetReviewsAsync(token);
@@ -29,6 +31,7 @@ public sealed class ReviewsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(ReviewDTO), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Get([FromRoute] string id, CancellationToken token)
     {
         if (Guid.TryParse(id, out var reviewId))

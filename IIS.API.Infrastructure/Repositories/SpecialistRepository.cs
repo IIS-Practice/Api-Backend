@@ -17,6 +17,8 @@ public sealed class SpecialistRepository : ISpecialistRepository
 
     public async Task AddServiceToSpecialistAsync(Specialist specialist, Service service, CancellationToken token)
     {
+        _specialists.Attach(specialist);
+
         specialist.Services.Add(service);
 
         await _context.SaveChangesAsync(token);

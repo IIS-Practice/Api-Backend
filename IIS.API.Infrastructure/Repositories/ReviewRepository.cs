@@ -21,6 +21,7 @@ public sealed class ReviewRepository : IReviewRepository
     public async Task<Guid> AddReviewAsync(Review review, CancellationToken token)
     {
         review.Id = Guid.NewGuid();
+        review.Date = DateTime.UtcNow;
 
         _users.Where(u => u.Id == review.UserId).Load();
 
@@ -67,6 +68,8 @@ public sealed class ReviewRepository : IReviewRepository
 
     public async Task<Guid> UpdateReviewAsync(Review review, CancellationToken token)
     {
+        review.Date = DateTime.UtcNow;
+
         _users.Where(u => u.Id == review.UserId).Load();
 
         _reviews.Update(review);

@@ -12,12 +12,12 @@ internal class CreateReviewValidator : AbstractValidator<Review>
             .NotNull()
             .WithMessage("Review text cannot be null.");
 
-        RuleFor(r => r.Date)
-            .NotEmpty()
-            .WithMessage("Review date cannot be empty.")
-            .NotNull()
-            .WithMessage("Review date cannot be null.")
-            .LessThanOrEqualTo(r => DateTime.UtcNow);
+        //RuleFor(r => r.Date)
+        //    .NotEmpty()
+        //    .WithMessage("Review date cannot be empty.")
+        //    .NotNull()
+        //    .WithMessage("Review date cannot be null.")
+        //    .LessThanOrEqualTo(r => DateTime.UtcNow);
 
 
         RuleFor(r => r.UserId)

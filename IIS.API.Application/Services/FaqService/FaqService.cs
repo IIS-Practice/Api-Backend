@@ -4,6 +4,8 @@ using IIS.API.Domain.Abstractions;
 using IIS.API.Domain.Entities;
 using System.Linq.Expressions;
 
+using ValidationException = IIS.API.Application.Common.Exceptions.ValidationException;
+
 namespace IIS.API.Application.Services.FaqService;
 internal sealed class FaqService : IFaqService
 {

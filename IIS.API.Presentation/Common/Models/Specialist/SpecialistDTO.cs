@@ -1,4 +1,6 @@
-﻿namespace IIS.API.Presentation.Common.Models;
+﻿using static IIS.API.Presentation.Common.Models.Specialist.SpecialistDTO;
+
+namespace IIS.API.Presentation.Common.Models.Specialist;
 
 public class SpecialistDTO
 {
@@ -26,9 +28,9 @@ public class SpecialistDTO
 
     public string Position { get; set; } = string.Empty;
 
-    public List<ServiceDTO> Services { get; set; } = [];
+    public List<NestedServiceDTO> Services { get; set; } = [];
 
-    public class ServiceDTO
+    public class NestedServiceDTO
     {
         public Guid Id { get; set; }
 

@@ -1,15 +1,10 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using IIS.API.Domain.Abstractions;
-using IIS.API.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 using DomainApplication = IIS.API.Domain.Entities.Application;
+using ValidationException = IIS.API.Application.Common.Exceptions.ValidationException;
 
 namespace IIS.API.Application.Services.ApplicationService;
 internal class ApplicationService : IApplicationService
@@ -28,7 +23,7 @@ internal class ApplicationService : IApplicationService
 
         if (!valRes.IsValid)
         {
-            throw new Common.Exceptions.ValidationException(valRes.Errors);
+            throw new ValidationException(valRes.Errors);
         }
 
         await _applicationRepository.AddApplicationAsync(application, token);
@@ -67,7 +62,7 @@ internal class ApplicationService : IApplicationService
 
         if (!valRes.IsValid)
         {
-            throw new Common.Exceptions.ValidationException(valRes.Errors);
+            throw new ValidationException(valRes.Errors);
         }
 
         return await _applicationRepository.UpdateApplicationAsync(application, token);

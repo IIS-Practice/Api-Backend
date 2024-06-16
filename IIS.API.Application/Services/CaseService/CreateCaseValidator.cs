@@ -22,7 +22,7 @@ public class CreateCaseValidator : AbstractValidator<Case>
 
         RuleFor(c => c.StartDate).NotNull()
             .NotEmpty().WithMessage("Start date cannot be empty")
-            .LessThanOrEqualTo(DateTime.Now).WithMessage($"Start date must be less or equal to {DateTime.Now.Date}");
+            .LessThanOrEqualTo(DateTime.UtcNow).WithMessage($"Start date must be less or equal to UTC date: {DateTime.UtcNow.Date}");
 
         RuleFor(c => c.EndDate).NotNull()
             .NotEmpty().WithMessage("Start date cannot be empty")

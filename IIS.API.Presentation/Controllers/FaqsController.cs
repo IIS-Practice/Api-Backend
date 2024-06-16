@@ -1,6 +1,7 @@
 ﻿using IIS.API.Application.Services.FaqService;
 using IIS.API.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 
 namespace IIS.API.Presentation.Controllers;
@@ -43,7 +44,7 @@ public sealed class FaqsController : ControllerBase
     {
         await _faqService.AddFaqAsync(faq, token);
 
-        return Ok();
+        return NoContent();    
     }
 
     [HttpPut("{id}")]
@@ -54,7 +55,7 @@ public sealed class FaqsController : ControllerBase
             faq.Id = faqId;
             await _faqService.UpdateFaqAsync(faq, token);
 
-            return Ok();
+            return NoContent();
         }
 
         return NotFound();
@@ -67,7 +68,7 @@ public sealed class FaqsController : ControllerBase
         {
             await _faqService.DeleteFaqAsync(faqId, token);
 
-            return Ok();
+            return NoContent();
         }
 
         return NotFound();

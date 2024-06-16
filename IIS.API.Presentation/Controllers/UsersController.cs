@@ -42,7 +42,7 @@ public class UsersController : ControllerBase
     {
         await _userService.AddUserAsync(user, token);
 
-        return Ok();
+        return NoContent();
     }
 
     [HttpPut("{id}")]
@@ -53,7 +53,7 @@ public class UsersController : ControllerBase
             user.Id = userId;
             await _userService.UpdateUserAsync(user, token);
 
-            return Ok();
+            return NoContent();
         }
 
         return NotFound();
@@ -66,7 +66,7 @@ public class UsersController : ControllerBase
         {
             await _userService.DeleteUserAsync(userId, token);
 
-            return Ok();
+            return NoContent();
         }
 
         return NotFound();

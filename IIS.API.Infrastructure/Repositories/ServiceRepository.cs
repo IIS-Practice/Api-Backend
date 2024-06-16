@@ -1,28 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using IIS.API.Domain.Abstractions;
+﻿using IIS.API.Domain.Abstractions;
 using IIS.API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace IIS.API.Infrastructure.Repositories;
 internal class ServiceRepository : IServiceRepository
 {
-    private readonly DbSet<Service> _serviceServices;
+    private readonly DbSet<Service> _services;
     private readonly ApplicationDbContext _context;
     public ServiceRepository(ApplicationDbContext context)
     {
         _context = context;
-        _serviceServices = context.Services;
+        _services = context.Services;
     }
+
+    public async Task AddCaseToServiceAsync(Service service, Case @case, CancellationToken token)
+    {
+        _services.Attach(service);
+
+        service.Cases.Add(@case);
+
+        await _context.SaveChangesAsync(token);
+    }
+
     public async Task<Guid> AddServiceAsync(Service service, CancellationToken token)
     {
         service.Id = Guid.NewGuid();
 
-        await _serviceServices.AddAsync(service, token);
+        await _services.AddAsync(service, token);
         await _context.SaveChangesAsync(token);
 
         return service.Id;
@@ -30,26 +35,52 @@ internal class ServiceRepository : IServiceRepository
 
     public async Task DeleteServiceAsync(Service service, CancellationToken token)
     {
-        _serviceServices.Remove(service);
+        _services.Remove(service);
         await _context.SaveChangesAsync(token);
     }
 
-    public async Task<Service?> FirstOrDefaultServiceAsync(Expression<Func<Service, bool>> filtres, CancellationToken token)
+    public async Task<Service?> FirstOrDefaultServiceAsync(Expression<Func<Service, bool>> filtres, 
+                                                            CancellationToken token, 
+                                                            params Expression<Func<Service, object>>[]? includesProperties)
     {
-        return await _serviceServices.AsNoTracking().FirstOrDefaultAsync(filtres, token);
+        IQueryable<Service> query = _services.AsNoTracking().AsQueryable();
+
+        if (includesProperties is not null 
+                && includesProperties.Length != 0)
+        {
+            foreach (var include in includesProperties)
+            {
+                query = query.Include(include);
+            }
+        }
+
+        return await query.FirstOrDefaultAsync(filtres, token);
     }
 
-    public Task<IEnumerable<Service>> GetAllServicesAsync(Expression<Func<Service, bool>>? filtres, CancellationToken token)
+    public Task<IEnumerable<Service>> GetAllServicesAsync(Expression<Func<Service, bool>>? filtres, 
+                                                            CancellationToken token, 
+                                                            params Expression<Func<Service, object>>[]? includesProperties)
     {
-        if (filtres is null)
-            return Task.FromResult(_serviceServices.AsNoTracking().AsEnumerable());
+        IQueryable<Service> query = _services.AsNoTracking().AsQueryable();
 
-        return Task.FromResult(_serviceServices.AsNoTracking().Where(filtres).AsEnumerable());
+        if (includesProperties is not null
+                && includesProperties.Length != 0)
+        {
+            foreach (var include in includesProperties)
+            {
+                query = query.Include(include);
+            }
+        }
+
+        if (filtres is null)
+            return Task.FromResult(query.AsEnumerable());
+
+        return Task.FromResult(query.Where(filtres).AsEnumerable());
     }
 
     public async Task<Guid> UpdateServiceAsync(Service service, CancellationToken token)
     {
-        _serviceServices.Update(service);
+        _services.Update(service);
         await _context.SaveChangesAsync(token);
 
         return service.Id;

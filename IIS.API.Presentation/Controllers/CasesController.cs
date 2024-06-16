@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using IIS.API.Application.Services.CaseService;
-using IIS.API.Application.Services.ReviewService;
 using IIS.API.Domain.Entities;
 using IIS.API.Presentation.Common.Models.Case;
-using IIS.API.Presentation.Common.Models.Review;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IIS.API.Presentation.Controllers;
@@ -52,9 +50,9 @@ public class CasesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CaseRequestDTO caseRequestDTO, CancellationToken token)
     {
-        var review = _mapper.Map<Case>(caseRequestDTO);
+        var @case = _mapper.Map<Case>(caseRequestDTO);
 
-        await _caseService.AddCaseAsync(review, token);
+        await _caseService.AddCaseAsync(@case, token);
 
         return NoContent();
     }

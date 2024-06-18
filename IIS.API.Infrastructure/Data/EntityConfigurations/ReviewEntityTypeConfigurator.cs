@@ -21,13 +21,9 @@ public class ReviewEntityTypeConfigurator : IEntityTypeConfiguration<Review>
         reviewConfigBuilder.Property(r => r.Date)
             .IsRequired();
 
-        reviewConfigBuilder.Property(r => r.UserId)
-            .IsRequired();
-
-        reviewConfigBuilder.HasOne(r => r.User)
-            .WithMany()
-            .HasForeignKey(r => r.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+        reviewConfigBuilder.Property(r => r.Username)
+            .IsRequired()
+            .HasMaxLength(30);
 
         reviewConfigBuilder.SeedReviews();
     }

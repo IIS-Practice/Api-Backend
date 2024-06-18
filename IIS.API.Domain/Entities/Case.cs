@@ -18,6 +18,4 @@ public class Case
     public List<string> ImagesUri { get; set; } = [];
 
     public List<Service> Services { get; set; } = [];
-
-    public List<Review> Rewiews { get; set; } = [];
 }

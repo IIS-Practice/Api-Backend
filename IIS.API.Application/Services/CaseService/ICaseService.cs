@@ -15,7 +15,7 @@ public interface ICaseService
 
     public Task<Case?> GetFirstOrDefaultCaseAsync(Expression<Func<Case, bool>> predicate, CancellationToken token);
 
-    public Task AddReviewToCaseAsync(Guid @caseId, Guid reviewId, CancellationToken token);
-
     public Task AddImageAsync(Guid caseId, IFormFile image, CancellationToken token);
+
+    public Task RemoveImageAsync(Guid caseId, string imageName, CancellationToken token);
 }

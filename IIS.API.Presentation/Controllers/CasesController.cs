@@ -99,4 +99,17 @@ public class CasesController : ControllerBase
         }
         return NotFound();
     }
+
+    [HttpDelete("/Images/Cases/{caseId}/{image}")]
+    public async Task<IActionResult> DeleteImage([FromRoute] string caseId, [FromRoute] string image, CancellationToken token)
+    {
+        if (Guid.TryParse(caseId, out Guid id))
+        {
+            await _caseService.RemoveImageAsync(id, image, token);
+
+            return NoContent();
+        }
+
+        return NotFound("Invalid case id");
+    }
 }

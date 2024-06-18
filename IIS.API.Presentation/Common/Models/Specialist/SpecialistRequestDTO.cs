@@ -23,4 +23,6 @@ public class SpecialistRequestDTO
     required public int Gender { get; set; }
 
     required public string Position { get; set; }
+
+    required public string Description { get; set; }
 }

@@ -20,10 +20,12 @@ internal class CreateReviewValidator : AbstractValidator<Review>
         //    .LessThanOrEqualTo(r => DateTime.UtcNow);
 
 
-        RuleFor(r => r.UserId)
+        RuleFor(r => r.Username)
             .NotEmpty()
-            .WithMessage("User ID cannot be empty.")
+            .WithMessage("Username cannot be empty.")
             .NotNull()
-            .WithMessage("User ID cannot be null.");
+            .WithMessage("Username cannot be null.")
+            .MaximumLength(30)
+            .WithMessage("Username must be less than 30 characters");
     }
 }

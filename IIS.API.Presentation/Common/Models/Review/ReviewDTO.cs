@@ -8,8 +8,6 @@ public class ReviewDTO
 
     required public DateTime Date { get; set; }
 
-    required public Guid UserId { get; set; }
-
-    required public string FullName { get; set; }
+    required public string Username { get; set; }
 }
 

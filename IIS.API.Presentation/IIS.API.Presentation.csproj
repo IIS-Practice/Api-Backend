@@ -20,4 +20,8 @@
     <ProjectReference Include="..\IIS.API.Infrastructure\IIS.API.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Cases\" />
+  </ItemGroup>
+
 </Project>

@@ -18,6 +18,8 @@ public class CaseDTO
 
     required public int Complexity { get; set; }
 
+    public List<string> Images { get; set; } = [];
+
     public List<ReviewDTO> Reviews { get; set; } = [];
 
     public List<InnerServiceDTO> Services { get; set; } = [];

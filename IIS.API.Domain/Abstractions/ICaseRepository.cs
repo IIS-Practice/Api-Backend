@@ -15,4 +15,6 @@ public interface ICaseRepository
     public Task<Case?> FirstOrDefaultCaseAsync(Expression<Func<Case, bool>> filtres, CancellationToken token, params Expression<Func<Case, object>>[]? includesProperties);
 
     public Task AddReviewToCaseAsync(Case @case, Review review, CancellationToken token);
+
+    public Task AddImageAsync(Case @case, string image, CancellationToken token);
 }

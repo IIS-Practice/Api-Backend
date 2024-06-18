@@ -24,6 +24,15 @@ public sealed class CaseRepository : ICaseRepository
         return @case.Id;
     }
 
+    public async Task AddImageAsync(Case @case, string image, CancellationToken token)
+    {
+        _cases.Attach(@case);
+
+        @case.ImagesUri.Add(image);
+
+        await _context.SaveChangesAsync(token);
+    }
+
     public async Task AddReviewToCaseAsync(Case @case, Review review, CancellationToken token)
     {
         @case.Rewiews.Add(review);

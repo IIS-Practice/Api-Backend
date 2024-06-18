@@ -2,6 +2,7 @@
 using IIS.API.Domain.Abstractions;
 using IIS.API.Domain.Entities;
 using System.Linq.Expressions;
+
 using ValidationException = IIS.API.Application.Common.Exceptions.ValidationException;
 
 namespace IIS.API.Application.Services.ReviewService;
@@ -10,13 +11,11 @@ internal sealed class ReviewService : IReviewService
 {
     private readonly IReviewRepository _reviewRepository;
     private readonly AbstractValidator<Review> _validator;
-    private readonly IUserRepository _userRepository;
 
-    public ReviewService(IReviewRepository repository, IUserRepository userRepository)
+    public ReviewService(IReviewRepository repository)
     {
         _reviewRepository = repository;
         _validator = new CreateReviewValidator();
-        _userRepository = userRepository;
     }
 
     public async Task<Guid> AddReviewAsync(Review review, CancellationToken token)
@@ -59,11 +58,6 @@ internal sealed class ReviewService : IReviewService
 
         if (existReview == default)
             throw new KeyNotFoundException("Review not found");
-
-        var user = await _userRepository.FirstOrDefaultUserAsync(u => u.Id == review.UserId, token);
-
-        if (user == default)
-            throw new KeyNotFoundException("User not found");
 
         await _reviewRepository.UpdateReviewAsync(review, token);
 

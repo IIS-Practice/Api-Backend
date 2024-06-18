@@ -19,18 +19,6 @@ public class ServiceToDTO : Profile
                 opt => opt.MapFrom(s => s.Complexity))
             .ForMember(sDTO => sDTO.Cost,
                 opt => opt.MapFrom(s => s.Cost));
-
-        CreateMap<Case, ServiceDTO.InnerCaseDTO>()
-            .ForMember(cDTO => cDTO.Id,
-                opt => opt.MapFrom(c => c.Id))
-            .ForMember(cDTO => cDTO.Name,
-                opt => opt.MapFrom(c => c.Name));
-
-        CreateMap<Specialist, ServiceDTO.InnerSpecialistDTO>()
-            .ForMember(sDTO => sDTO.Id,
-                opt => opt.MapFrom(s => s.Id))
-            .ForMember(sDTO => sDTO.FullName,
-                opt => opt.MapFrom(s => $"{s.Name} {s.Surname} {s.Patronymic}"));
     }
 
 }

@@ -23,8 +23,6 @@ public sealed class ReviewRepository : IReviewRepository
         review.Id = Guid.NewGuid();
         review.Date = DateTime.UtcNow;
 
-        _users.Where(u => u.Id == review.UserId).Load();
-
         await _reviews.AddAsync(review, token);
 
         await _context.SaveChangesAsync(token);
@@ -38,30 +36,20 @@ public sealed class ReviewRepository : IReviewRepository
         await _context.SaveChangesAsync(token);
     }
 
-    public async Task<Review?> FirstOrDefaultReviewAsync(Expression<Func<Review, bool>> filters, CancellationToken token)
+    public Task<Review?> FirstOrDefaultReviewAsync(Expression<Func<Review, bool>> filters, CancellationToken token)
     {
-        var review = await _reviews.AsNoTracking().FirstOrDefaultAsync(filters, token);
+        return _reviews.AsNoTracking().FirstOrDefaultAsync(filters, token);
 
-        if (review is not null)
-        {
-            review.User = _users.AsNoTracking().Where(u => u.Id == review.UserId).Single();
-        }
-
-        return review;
     }
 
     public Task<IEnumerable<Review>> GetReviewsAsync(Expression<Func<Review, bool>>? filters, CancellationToken token)
     {
         if (filters is null)
         {
-            _users.Load();
             return Task.FromResult(_reviews.AsEnumerable());
         }
 
         var reviews = _reviews.Where(filters);
-
-        // загрузка пользователей, отзывы которых соответствуют фильтру
-        _users.Where(u => reviews.Any(r => r.UserId == u.Id)).Load();
 
         return Task.FromResult(reviews.AsEnumerable());
     }
@@ -69,8 +57,6 @@ public sealed class ReviewRepository : IReviewRepository
     public async Task<Guid> UpdateReviewAsync(Review review, CancellationToken token)
     {
         review.Date = DateTime.UtcNow;
-
-        _users.Where(u => u.Id == review.UserId).Load();
 
         _reviews.Update(review);
 

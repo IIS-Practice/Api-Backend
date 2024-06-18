@@ -22,7 +22,9 @@ public class CaseToDTO : Profile
             .ForMember(cDTO => cDTO.StartDate,
                 opt => opt.MapFrom(c => c.StartDate))
             .ForMember(cDTO => cDTO.EndDate,
-                opt => opt.MapFrom(c => c.EndDate));
+                opt => opt.MapFrom(c => c.EndDate))
+            .ForMember(cDTO => cDTO.Images,
+                opt => opt.MapFrom(c => c.ImagesUri));
 
         CreateMap<Service, CaseDTO.InnerServiceDTO>()
             .ForMember(cDTO => cDTO.Id,

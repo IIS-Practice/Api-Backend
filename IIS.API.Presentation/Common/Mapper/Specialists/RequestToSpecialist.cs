@@ -18,7 +18,9 @@ public class RequestToSpecialist : Profile
             .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
             .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth))
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
-            .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password));
+            .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
+            .ForMember(dest => dest.Position, opt => opt.MapFrom(src => src.Position))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
     }
 
 }

@@ -4,6 +4,7 @@ using IIS.API.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IIS.API.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240618144254_AddImagesToCase")]
+    partial class AddImagesToCase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,7 @@ namespace IIS.API.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 6, 18, 20, 15, 46, 707, DateTimeKind.Utc).AddTicks(2098));
+                        .HasDefaultValue(new DateTime(2024, 6, 18, 14, 42, 52, 33, DateTimeKind.Utc).AddTicks(8669));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -79,7 +82,7 @@ namespace IIS.API.Infrastructure.Migrations
                         {
                             Id = new Guid("68bf8340-f170-46de-ac5f-5a7f59f2103e"),
                             Author = "Author 1",
-                            Date = new DateTime(2024, 6, 18, 23, 15, 46, 707, DateTimeKind.Local).AddTicks(2837),
+                            Date = new DateTime(2024, 6, 18, 17, 42, 52, 33, DateTimeKind.Local).AddTicks(9542),
                             Description = "Description 1",
                             Email = "email1@gmail.com",
                             NormalizedEmail = "email1@gmail.com",
@@ -89,7 +92,7 @@ namespace IIS.API.Infrastructure.Migrations
                         {
                             Id = new Guid("afb6a935-00ce-45fc-95b6-5f807d92a95e"),
                             Author = "Author 2",
-                            Date = new DateTime(2024, 6, 18, 23, 15, 46, 707, DateTimeKind.Local).AddTicks(2841),
+                            Date = new DateTime(2024, 6, 18, 17, 42, 52, 33, DateTimeKind.Local).AddTicks(9547),
                             Description = "Description 2",
                             Email = "email2@gmail.com",
                             NormalizedEmail = "email2@gmail.com",
@@ -159,6 +162,9 @@ namespace IIS.API.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CaseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -167,12 +173,14 @@ namespace IIS.API.Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CaseId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews", (string)null);
 
@@ -182,21 +190,21 @@ namespace IIS.API.Infrastructure.Migrations
                             Id = new Guid("36f010ed-8c38-4eeb-b9ec-5fb86ccf3189"),
                             Date = new DateTime(2024, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Text = "This is review 1",
-                            Username = "Bobik"
+                            UserId = new Guid("68bf8340-f170-46de-ac5f-5a7f59f2103e")
                         },
                         new
                         {
                             Id = new Guid("16a79d25-a4f4-4cf0-99ec-835073f0c946"),
                             Date = new DateTime(2024, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Text = "This is review 2",
-                            Username = "Vasula"
+                            UserId = new Guid("68bf8340-f170-46de-ac5f-5a7f59f2103e")
                         },
                         new
                         {
                             Id = new Guid("03b061d4-2aca-44c8-8489-c92390e21cd5"),
                             Date = new DateTime(2024, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Text = "This is review 3",
-                            Username = "Volodia"
+                            UserId = new Guid("afb6a935-00ce-45fc-95b6-5f807d92a95e")
                         });
                 });
 
@@ -229,7 +237,7 @@ namespace IIS.API.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("15f3e783-7728-46d3-9702-85657452c53d"),
+                            Id = new Guid("0e63de10-1b22-4cb7-ab3d-599c5d474660"),
                             Complexity = 5,
                             Cost = 159m,
                             Description = "description 1",
@@ -237,7 +245,7 @@ namespace IIS.API.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("40821a05-b130-46b9-ba71-085af5aa3220"),
+                            Id = new Guid("d7e56f79-4ddf-4a86-b4fe-f0a59f7dd82d"),
                             Complexity = 3,
                             Cost = 109m,
                             Description = "description 2",
@@ -321,7 +329,7 @@ namespace IIS.API.Infrastructure.Migrations
                             Id = new Guid("68bf8340-f170-46de-ac5f-5a7f59f2103e"),
                             City = "City 1",
                             Country = "Country 1",
-                            DateOfBirth = new DateTime(2004, 6, 18, 23, 15, 46, 706, DateTimeKind.Local).AddTicks(9183),
+                            DateOfBirth = new DateTime(2004, 6, 18, 17, 42, 52, 33, DateTimeKind.Local).AddTicks(2847),
                             Email = "email1@gmail.com",
                             Gender = 1,
                             Name = "Name 1",
@@ -336,7 +344,7 @@ namespace IIS.API.Infrastructure.Migrations
                             Id = new Guid("afb6a935-00ce-45fc-95b6-5f807d92a95e"),
                             City = "City 2",
                             Country = "Country 2",
-                            DateOfBirth = new DateTime(1974, 6, 18, 23, 15, 46, 706, DateTimeKind.Local).AddTicks(9198),
+                            DateOfBirth = new DateTime(1974, 6, 18, 17, 42, 52, 33, DateTimeKind.Local).AddTicks(2866),
                             Email = "email2@gmail.com",
                             Gender = 2,
                             Name = "Name 2",
@@ -367,10 +375,6 @@ namespace IIS.API.Infrastructure.Migrations
                 {
                     b.HasBaseType("IIS.API.Domain.Entities.User");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Position")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -383,7 +387,7 @@ namespace IIS.API.Infrastructure.Migrations
                             Id = new Guid("68bf8123-f170-46de-ac5f-5a7f59f2103e"),
                             City = "City 3",
                             Country = "Country 3",
-                            DateOfBirth = new DateTime(2004, 6, 18, 23, 15, 46, 707, DateTimeKind.Local).AddTicks(3092),
+                            DateOfBirth = new DateTime(2004, 6, 18, 17, 42, 52, 33, DateTimeKind.Local).AddTicks(9844),
                             Email = "email3@gmail.com",
                             Gender = 1,
                             Name = "Name 3",
@@ -392,7 +396,6 @@ namespace IIS.API.Infrastructure.Migrations
                             Patronymic = "Patronymic 3",
                             PhoneNumber = "+375 (29) 333-33-33",
                             Surname = "Surname 3",
-                            Description = "",
                             Position = "Position 1"
                         },
                         new
@@ -400,7 +403,7 @@ namespace IIS.API.Infrastructure.Migrations
                             Id = new Guid("45bf8340-f203-46de-ac5f-5a7f59f2103e"),
                             City = "City 4",
                             Country = "Country 4",
-                            DateOfBirth = new DateTime(1974, 6, 18, 23, 15, 46, 707, DateTimeKind.Local).AddTicks(3097),
+                            DateOfBirth = new DateTime(1974, 6, 18, 17, 42, 52, 33, DateTimeKind.Local).AddTicks(9851),
                             Email = "email4@gmail.com",
                             Gender = 2,
                             Name = "Name 4",
@@ -409,7 +412,6 @@ namespace IIS.API.Infrastructure.Migrations
                             Patronymic = "Patronymic 4",
                             PhoneNumber = "+375 (29) 444-44-44",
                             Surname = "Surname 4",
-                            Description = "",
                             Position = "Position 2"
                         });
                 });
@@ -429,6 +431,21 @@ namespace IIS.API.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("IIS.API.Domain.Entities.Review", b =>
+                {
+                    b.HasOne("IIS.API.Domain.Entities.Case", null)
+                        .WithMany("Rewiews")
+                        .HasForeignKey("CaseId");
+
+                    b.HasOne("IIS.API.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ServiceSpecialist", b =>
                 {
                     b.HasOne("IIS.API.Domain.Entities.Service", null)
@@ -442,6 +459,11 @@ namespace IIS.API.Infrastructure.Migrations
                         .HasForeignKey("SpecialistsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("IIS.API.Domain.Entities.Case", b =>
+                {
+                    b.Navigation("Rewiews");
                 });
 #pragma warning restore 612, 618
         }

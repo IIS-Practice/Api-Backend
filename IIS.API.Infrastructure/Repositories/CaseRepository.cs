@@ -24,9 +24,11 @@ public sealed class CaseRepository : ICaseRepository
         return @case.Id;
     }
 
-    public async Task AddReviewToCaseAsync(Case @case, Review review, CancellationToken token)
+    public async Task AddImageAsync(Case @case, string image, CancellationToken token)
     {
-        @case.Rewiews.Add(review);
+        _cases.Attach(@case);
+
+        @case.ImagesUri.Add(image);
 
         await _context.SaveChangesAsync(token);
     }
@@ -73,6 +75,15 @@ public sealed class CaseRepository : ICaseRepository
         }
 
         return Task.FromResult(query.Where(filtres).AsEnumerable());
+    }
+
+    public async Task RemoveImageAsync(Case @case, string image, CancellationToken token)
+    {
+        _cases.Attach(@case);
+
+        @case.ImagesUri.Remove(image);
+
+        await _context.SaveChangesAsync(token);
     }
 
     public async Task<Guid> UpdateCaseAsync(Case @case, CancellationToken token)

@@ -20,7 +20,10 @@ public class CreateSpecialistValidator : AbstractValidator<Specialist>
 
         RuleFor(s => s.Email).NotNull()
             .EmailAddress().WithMessage("Email must contain @")
-            .MaximumLength(20).WithMessage("Email length must be at least 30"); ;
+            .MaximumLength(20).WithMessage("Email length must be at least 30");
+
+        RuleFor(s => s.Description).NotNull()
+            .NotEmpty().WithMessage("Description cannot be empty");
 
         RuleFor(s => s.City).NotNull()
             .NotEmpty().WithMessage("City cannot be empty")

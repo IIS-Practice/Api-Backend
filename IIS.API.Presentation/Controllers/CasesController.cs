@@ -60,6 +60,18 @@ public class CasesController : ControllerBase
         return NoContent();
     }
 
+    [HttpPost("{id}")]
+    public async Task<IActionResult> PostImage(string id, IFormFile formFile, CancellationToken token)
+    {
+        if (Guid.TryParse(id, out Guid caseId) && formFile is not null)
+        {
+            await _caseService.AddImageAsync(caseId, formFile, token);
+            return NoContent();
+        }
+
+        return NotFound("Invalid id or image is null");
+    }
+
     [HttpPut("{id}")]
     public async Task<IActionResult> Put([FromRoute] string id, [FromBody] CaseRequestDTO caseRequestDTO, CancellationToken token)
     {
@@ -86,5 +98,18 @@ public class CasesController : ControllerBase
             return NoContent();
         }
         return NotFound();
+    }
+
+    [HttpDelete("/Images/Cases/{caseId}/{image}")]
+    public async Task<IActionResult> DeleteImage([FromRoute] string caseId, [FromRoute] string image, CancellationToken token)
+    {
+        if (Guid.TryParse(caseId, out Guid id))
+        {
+            await _caseService.RemoveImageAsync(id, image, token);
+
+            return NoContent();
+        }
+
+        return NotFound("Invalid case id");
     }
 }

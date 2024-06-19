@@ -1,6 +1,7 @@
 ﻿using IIS.API.Domain.Abstractions;
 using IIS.API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq.Expressions;
 
 namespace IIS.API.Infrastructure.Repositories;
@@ -83,6 +84,15 @@ public sealed class SpecialistRepository : ISpecialistRepository
         _specialists.Attach(specialist);
 
         specialist.CvUri = cvUri;
+
+        await _context.SaveChangesAsync(token);
+    }
+
+    public async Task SaveImageAsync(Specialist specialist, string image, CancellationToken token)
+    {
+        _specialists.Attach(specialist);
+
+        specialist.ImageUri = image;
 
         await _context.SaveChangesAsync(token);
     }

@@ -17,4 +17,6 @@ public class SpecialistDTO
     required public string Position { get; set; }
 
     public string? CvUri { get; set; }
+
+    public string? ImageUrl { get; set; }
 }

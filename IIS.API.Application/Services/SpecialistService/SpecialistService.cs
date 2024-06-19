@@ -115,13 +115,13 @@ internal sealed class SpecialistService : ISpecialistService
         if (specialist == default)
             throw new KeyNotFoundException("Specialist not found");
 
-        if (specialist.ImageUri is not null)
+        if (specialist.CvUri is not null)
         {
             string? file = Directory.EnumerateFiles(Path.Combine(_options.WebRootPath, "cv"))
-                                .Where(f => specialist.ImageUri.Contains(f)).FirstOrDefault();
+                                .Where(f => specialist.CvUri.Contains(f)).FirstOrDefault();
 
             if (file == default)
-                throw new KeyNotFoundException("Deleted image not found");
+                throw new KeyNotFoundException("Deleted cv not found");
 
             File.Delete(file);
         }
@@ -132,6 +132,32 @@ internal sealed class SpecialistService : ISpecialistService
         await cvFile.CopyToAsync(fileStream, token);
 
         await _specialistRepository.SaveCvAsync(specialist, Path.Combine($"{_options.Host}/Images/Specialists/cv", fName), token);
+    }
+
+    public async Task SaveImageAsync(Guid specialistId, IFormFile imageFile, CancellationToken token)
+    {
+        Specialist? specialist = await _specialistRepository.FirstOrDefaultSpecialistAsync(s => s.Id == specialistId, token);
+
+        if (specialist == default)
+            throw new KeyNotFoundException("Specialist not found");
+
+        if (specialist.ImageUri is not null)
+        {
+            string? file = Directory.EnumerateFiles(Path.Combine(_options.WebRootPath, "Avatar"))
+                                .Where(f => specialist.ImageUri.Contains(f)).FirstOrDefault();
+
+            if (file == default)
+                throw new KeyNotFoundException("Deleted image not found");
+
+            File.Delete(file);
+        }
+
+        string filePath = GetFilePath(imageFile.FileName, Path.Combine(_options.WebRootPath, "Images/Specialists/Avatar"), out string fName);
+
+        using Stream fileStream = new FileStream(filePath, FileMode.Create);
+        await imageFile.CopyToAsync(fileStream, token);
+
+        await _specialistRepository.SaveCvAsync(specialist, Path.Combine($"{_options.Host}/Images/Specialists/Avatar", fName), token);
     }
 
     private static string GetFilePath(string fileName, string folderPath, out string newFileName)

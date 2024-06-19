@@ -118,6 +118,9 @@ src/.vs/config/applicationhost.config
 .idea/
 
 #Images folder
-Images/Cases/
-Images/Specialists/cv/
-Images/Specialists/Avatar/
+IIS.API.Presentation/wwwroot/Images/Cases
+!IIS.API.Presentation/wwwroot/Images/Cases
+IIS.API.Presentation/wwwroot/Images/Specialists/cv/
+!IIS.API.Presentation/wwwroot/Images/Specialists/cv/
+IIS.API.Presentation/wwwroot/Images/Specialists/Avatar/
+!IIS.API.Presentation/wwwroot/Images/Specialists/Avatar/

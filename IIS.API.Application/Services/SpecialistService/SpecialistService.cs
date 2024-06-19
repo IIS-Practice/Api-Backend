@@ -52,6 +52,17 @@ internal sealed class SpecialistService : ISpecialistService
         if (specialist == default)
             throw new KeyNotFoundException("Specialist not found");
 
+        if (specialist.ImageUri is not null)
+        {
+            string? file = Directory.EnumerateFiles(Path.Combine(_options.WebRootPath, "cv"))
+                                .Where(f => specialist.ImageUri.Contains(f)).FirstOrDefault();
+
+            if (file == default)
+                throw new KeyNotFoundException("Deleted image not found");
+
+            File.Delete(file);
+        }
+
         await _specialistRepository.DeleteSpecialistAsync(specialist, token);
     }
 

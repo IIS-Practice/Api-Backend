@@ -1,7 +1,10 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using IIS.API.Application.Common.Options;
 using IIS.API.Domain.Abstractions;
 using IIS.API.Domain.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 using ValidationException = IIS.API.Application.Common.Exceptions.ValidationException;
@@ -11,13 +14,23 @@ internal sealed class SpecialistService : ISpecialistService
 {
     private readonly ISpecialistRepository _specialistRepository;
     private readonly IServiceRepository _serviceRepository;
+
     private readonly AbstractValidator<Specialist> _specialistValidator;
 
-    public SpecialistService(ISpecialistRepository specialistRepository, IServiceRepository serviceRepository)
+    private readonly WWWRootOptions _options;
+    private readonly string _specialistFolder;
+
+    public SpecialistService(ISpecialistRepository specialistRepository, 
+                                IServiceRepository serviceRepository,
+                                IOptions<WWWRootOptions> options)
     {
         _specialistRepository = specialistRepository;
         _serviceRepository = serviceRepository;
+
         _specialistValidator = new CreateSpecialistValidator();
+
+        _options = options.Value;
+        _specialistFolder = Path.Combine(_options.WebRootPath, "Images/Specialists");
     }
 
     public async Task<Guid> AddSpecialistAsync(Specialist specialist, CancellationToken token)
@@ -82,5 +95,39 @@ internal sealed class SpecialistService : ISpecialistService
             throw new KeyNotFoundException("Service not found");
 
         await _specialistRepository.AddServiceToSpecialistAsync(specialist, service, token);
+    }
+
+    public async Task SaveCvAsync(Guid specialistId, IFormFile cvFile, CancellationToken token)
+    {
+        Specialist? specialist = await _specialistRepository.FirstOrDefaultSpecialistAsync(s => s.Id == specialistId, token);
+
+        if (specialist == default)
+            throw new KeyNotFoundException("Specialist not found");
+
+        if (specialist.ImageUri is not null)
+        {
+            string? file = Directory.EnumerateFiles(Path.Combine(_options.WebRootPath, "cv"))
+                                .Where(f => specialist.ImageUri.Contains(f)).FirstOrDefault();
+
+            if (file == default)
+                throw new KeyNotFoundException("Deleted image not found");
+
+            File.Delete(file);
+        }
+
+        string filePath = GetFilePath(cvFile.FileName, Path.Combine(_options.WebRootPath, "Images/Specialists/cv"), out string fName);
+
+        using Stream fileStream = new FileStream(filePath, FileMode.Create);
+        await cvFile.CopyToAsync(fileStream, token);
+
+        await _specialistRepository.SaveCvAsync(specialist, Path.Combine($"{_options.Host}/Images/Specialists/cv", fName), token);
+    }
+
+    private static string GetFilePath(string fileName, string folderPath, out string newFileName)
+    {
+        string extension = Path.GetExtension(fileName);
+        newFileName = Path.ChangeExtension(Path.GetRandomFileName(), extension);
+
+        return Path.Combine(folderPath, newFileName);
     }
 }

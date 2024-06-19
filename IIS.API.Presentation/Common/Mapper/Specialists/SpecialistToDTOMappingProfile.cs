@@ -16,6 +16,7 @@ public class SpecialistToDTOMappingProfile : Profile
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
             .ForMember(dest => dest.Position, opt => opt.MapFrom(src => src.Position))
             .ForMember(dest => dest.CvUri, opt => opt.MapFrom(src => src.CvUri))
+            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUri))
             .ForMember(dest => dest.Desscription, opt => opt.MapFrom(src => src.Description));
     }
 }

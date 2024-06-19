@@ -18,4 +18,6 @@ public interface ISpecialistService
     public Task AddServiceToSpecialistAsync(Guid specialistId, Guid serviceId, CancellationToken token);
 
     public Task SaveCvAsync(Guid specialistId, IFormFile cvFile, CancellationToken token);
+
+    public Task SaveImageAsync(Guid specialistId, IFormFile image, CancellationToken token);
 }

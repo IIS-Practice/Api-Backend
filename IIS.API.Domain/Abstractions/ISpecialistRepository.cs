@@ -17,4 +17,6 @@ public interface ISpecialistRepository
     public Task AddServiceToSpecialistAsync(Specialist specialist, Service service, CancellationToken token);
 
     public Task SaveCvAsync(Specialist specialist, string cvUri,  CancellationToken token);
+
+    public Task SaveImageAsync(Specialist specialist, string image, CancellationToken token);
 }

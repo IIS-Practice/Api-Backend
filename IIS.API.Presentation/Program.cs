@@ -21,6 +21,8 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+app.UseCors();
+
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthorization();

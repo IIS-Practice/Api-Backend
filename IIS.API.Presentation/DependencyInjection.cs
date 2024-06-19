@@ -22,6 +22,16 @@ public static class DependencyInjection
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
+        services.AddCors(options =>
+         {
+             options.AddDefaultPolicy(builder =>
+             {
+                 builder.AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader();
+             });
+         });
+
         return services;
     }
 

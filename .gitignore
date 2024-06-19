@@ -1,3 +1,11 @@
+#Images folder
+IIS.API.Presentation/wwwroot/Images/Cases/*
+!IIS.API.Presentation/wwwroot/Images/Cases/.gitkeep
+IIS.API.Presentation/wwwroot/Images/Specialists/cv/*
+!IIS.API.Presentation/wwwroot/Images/Specialists/cv/.gitkeep
+IIS.API.Presentation/wwwroot/Images/Specialists/Avatar/*
+!IIS.API.Presentation/wwwroot/Images/Specialists/Avatar/.gitkeep
+
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
 [Bb]in/
 [Oo]bj/

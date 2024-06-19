@@ -67,6 +67,20 @@ public class SpecialistsController : ControllerBase
         return NotFound();
     }
 
+    [HttpPost("cv/{specialistId}")]
+    public async Task<IActionResult> PostService([FromRoute] string specialistId, IFormFile cv, CancellationToken token)
+    {
+        if (Guid.TryParse(specialistId, out Guid id) 
+                && cv is not null)
+        {
+            await _specialistService.SaveCvAsync(id, cv, token);
+
+            return NoContent();
+        }
+
+        return NotFound("Invaid specialist id or cv is null");
+    }
+
     [HttpPut("{id}")]
     public async Task<IActionResult> Put([FromRoute] string id, [FromBody] SpecialistRequestDTO specialistDTO, CancellationToken token)
     {

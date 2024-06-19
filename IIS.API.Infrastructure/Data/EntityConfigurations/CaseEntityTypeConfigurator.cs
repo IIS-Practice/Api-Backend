@@ -1,6 +1,7 @@
 ﻿using IIS.API.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using IIS.API.Infrastructure.Data.Seeders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace IIS.API.Infrastructure.Data.EntityConfigurations;
 internal class CaseEntityTypeConfigurator : IEntityTypeConfiguration<Case>
@@ -15,5 +16,7 @@ internal class CaseEntityTypeConfigurator : IEntityTypeConfiguration<Case>
         caseConfigBuilder.Property(s => s.Description).IsRequired();
         caseConfigBuilder.Property(s => s.Cost).IsRequired().HasPrecision(10, 2);
         caseConfigBuilder.Property(s => s.Complexity).IsRequired();
+
+        caseConfigBuilder.SeedCases();
     }
 }

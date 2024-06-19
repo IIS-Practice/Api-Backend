@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace IIS.API.Infrastructure.Data.Seeders;
 public static class CaseSeeder
 {
-    public static void SeedReviews(this EntityTypeBuilder<Case> caseConfBuilder)
+    public static void SeedCases(this EntityTypeBuilder<Case> caseConfBuilder)
     {
         caseConfBuilder.HasData([
             new Case

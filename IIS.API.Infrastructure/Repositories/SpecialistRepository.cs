@@ -78,6 +78,15 @@ public sealed class SpecialistRepository : ISpecialistRepository
         return Task.FromResult(query.Where(filtres).AsEnumerable());
     }
 
+    public async Task SaveCvAsync(Specialist specialist, string cvUri, CancellationToken token)
+    {
+        _specialists.Attach(specialist);
+
+        specialist.CvUri = cvUri;
+
+        await _context.SaveChangesAsync(token);
+    }
+
     public async Task<Guid> UpdateSpecialistAsync(Specialist specialist, CancellationToken token)
     {
         specialist.NormalizedEmail = specialist.Email.ToLower();

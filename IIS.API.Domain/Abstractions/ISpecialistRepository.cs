@@ -15,4 +15,6 @@ public interface ISpecialistRepository
     public Task<Specialist?> FirstOrDefaultSpecialistAsync(Expression<Func<Specialist, bool>> filtres, CancellationToken token, params Expression<Func<Specialist, object>>[]? includesProperties);
 
     public Task AddServiceToSpecialistAsync(Specialist specialist, Service service, CancellationToken token);
+
+    public Task SaveCvAsync(Specialist specialist, string cvUri,  CancellationToken token);
 }

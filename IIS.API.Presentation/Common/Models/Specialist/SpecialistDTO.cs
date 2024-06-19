@@ -2,17 +2,19 @@
 
 public class SpecialistDTO
 {
-    public Guid Id { get; set; }
+    required public Guid Id { get; set; }
 
-    public string Name { get; set; } = string.Empty;
+    required public string Name { get; set; }
 
-    public string Surname { get; set; } = string.Empty;
+    required public string Surname { get; set; }
 
-    public string Patronymic { get; set; } = string.Empty;
+    required public string Patronymic { get; set; }
 
-    public string Email { get; set; } = string.Empty;
+    required public string Email { get; set; }
 
-    public string Desscription {  get; set; } = string.Empty;
+    required public string Desscription {  get; set; }
 
-    public string Position { get; set; } = string.Empty;
+    required public string Position { get; set; }
+
+    public string? CvUri { get; set; }
 }

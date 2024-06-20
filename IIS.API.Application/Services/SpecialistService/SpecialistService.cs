@@ -55,7 +55,7 @@ internal sealed class SpecialistService : ISpecialistService
         if (specialist.ImageUri is not null)
         {
             string? file = Directory.EnumerateFiles(Path.Combine(_options.WebRootPath, "cv"))
-                                .Where(f => specialist.ImageUri.Contains(f)).FirstOrDefault();
+                                        .FirstOrDefault(specialist.ImageUri.Contains);
 
             if (file == default)
                 throw new KeyNotFoundException("Deleted image not found");
@@ -117,8 +117,8 @@ internal sealed class SpecialistService : ISpecialistService
 
         if (specialist.CvUri is not null)
         {
-            string? file = Directory.EnumerateFiles(Path.Combine(_options.WebRootPath, "cv"))
-                                .Where(f => specialist.CvUri.Contains(f)).FirstOrDefault();
+            string? file = Directory.EnumerateFiles(Path.Combine(_specialistFolder, "cv"))
+                                            .FirstOrDefault(f => specialist.CvUri.Contains(Path.GetFileName(f)));
 
             if (file == default)
                 throw new KeyNotFoundException("Deleted cv not found");
@@ -126,7 +126,7 @@ internal sealed class SpecialistService : ISpecialistService
             File.Delete(file);
         }
 
-        string filePath = GetFilePath(cvFile.FileName, Path.Combine(_options.WebRootPath, "Images/Specialists/cv"), out string fName);
+        string filePath = GetFilePath(cvFile.FileName, Path.Combine(_specialistFolder, "cv"), out string fName);
 
         using Stream fileStream = new FileStream(filePath, FileMode.Create);
         await cvFile.CopyToAsync(fileStream, token);
@@ -143,8 +143,8 @@ internal sealed class SpecialistService : ISpecialistService
 
         if (specialist.ImageUri is not null)
         {
-            string? file = Directory.EnumerateFiles(Path.Combine(_options.WebRootPath, "Avatar"))
-                                .Where(f => specialist.ImageUri.Contains(f)).FirstOrDefault();
+            string? file = Directory.EnumerateFiles(Path.Combine(_specialistFolder, "Avatar"))
+                                .FirstOrDefault(f => specialist.ImageUri.Contains(Path.GetFileName(f)));
 
             if (file == default)
                 throw new KeyNotFoundException("Deleted image not found");
@@ -152,12 +152,12 @@ internal sealed class SpecialistService : ISpecialistService
             File.Delete(file);
         }
 
-        string filePath = GetFilePath(imageFile.FileName, Path.Combine(_options.WebRootPath, "Images/Specialists/Avatar"), out string fName);
+        string filePath = GetFilePath(imageFile.FileName, Path.Combine(_specialistFolder, "Avatar"), out string fName);
 
         using Stream fileStream = new FileStream(filePath, FileMode.Create);
         await imageFile.CopyToAsync(fileStream, token);
 
-        await _specialistRepository.SaveCvAsync(specialist, Path.Combine($"{_options.Host}/Images/Specialists/Avatar", fName), token);
+        await _specialistRepository.SaveImageAsync(specialist, Path.Combine($"{_options.Host}/Images/Specialists/Avatar", fName), token);
     }
 
     private static string GetFilePath(string fileName, string folderPath, out string newFileName)
@@ -166,5 +166,48 @@ internal sealed class SpecialistService : ISpecialistService
         newFileName = Path.ChangeExtension(Path.GetRandomFileName(), extension);
 
         return Path.Combine(folderPath, newFileName);
+    }
+
+    public async Task RemoveCvAsync(Guid specialistId, CancellationToken token)
+    {
+        Specialist? specialist = await _specialistRepository.FirstOrDefaultSpecialistAsync(s => s.Id == specialistId, token);
+
+        if (specialist == default)
+            throw new KeyNotFoundException("Specialist not found");
+
+        if (specialist.CvUri is null)
+            throw new KeyNotFoundException("CV not found");
+
+        string? file = Directory.EnumerateFiles(Path.Combine(_specialistFolder, "cv"))
+                                    .FirstOrDefault(f => specialist.CvUri.Contains(Path.GetFileName(f)));
+
+        if (file == default)
+            throw new KeyNotFoundException("Deleted cv not found");
+
+        File.Delete(file);
+
+        await _specialistRepository.RemoveCvAsync(specialist, token);
+    }
+
+    public async Task RemoveImageAsync(Guid specialistId, CancellationToken token)
+    {
+        Specialist? specialist = await _specialistRepository.FirstOrDefaultSpecialistAsync(s => s.Id == specialistId, token);
+
+        if (specialist == default)
+            throw new KeyNotFoundException("Specialist not found");
+
+        if (specialist.ImageUri is null)
+            throw new KeyNotFoundException("Avatar not found");
+
+        string? file = Directory.EnumerateFiles(Path.Combine(_specialistFolder, "Avatar"))
+                                    .FirstOrDefault(f => specialist.ImageUri.Contains(Path.GetFileName(f)));
+
+
+        if (file == default)
+            throw new KeyNotFoundException("Deleted avatar not found");
+
+        File.Delete(file);
+
+        await _specialistRepository.RemoveImageAsync(specialist, token);
     }
 }

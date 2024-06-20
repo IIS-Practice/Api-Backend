@@ -81,7 +81,7 @@ public class SpecialistsController : ControllerBase
         return NotFound("Invaid specialist id or cv is null");
     }
 
-    [HttpPost("Avatar/{specialistId}")]
+    [HttpPost("avatar/{specialistId}")]
     public async Task<IActionResult> PostImageService([FromRoute] string specialistId, IFormFile image, CancellationToken token)
     {
         if (Guid.TryParse(specialistId, out Guid id)
@@ -122,5 +122,31 @@ public class SpecialistsController : ControllerBase
         }
 
         return NotFound();
+    }
+
+    [HttpDelete("cv/{specialistId}")]
+    public async Task<IActionResult> DeleteCv([FromRoute] string specialistId, CancellationToken token)
+    {
+        if (Guid.TryParse(specialistId, out Guid id))
+        {
+            await _specialistService.RemoveCvAsync(id, token);
+
+            return NoContent();
+        }
+
+        return NotFound("Invalid specialist Id");
+    }
+
+    [HttpDelete("avatar/{specialistId}")]
+    public async Task<IActionResult> DeleteAvatar([FromRoute] string specialistId, CancellationToken token)
+    {
+        if (Guid.TryParse(specialistId, out Guid id))
+        {
+            await _specialistService.RemoveImageAsync(id, token);
+
+            return NoContent();
+        }
+
+        return NotFound("Invalid specialist Id");
     }
 }

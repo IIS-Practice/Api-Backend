@@ -79,6 +79,24 @@ public sealed class SpecialistRepository : ISpecialistRepository
         return Task.FromResult(query.Where(filtres).AsEnumerable());
     }
 
+    public async Task RemoveCvAsync(Specialist specialist, CancellationToken token)
+    {
+        _specialists.Attach(specialist);
+
+        specialist.CvUri = null;
+
+        await _context.SaveChangesAsync(token);
+    }
+
+    public async Task RemoveImageAsync(Specialist specialist, CancellationToken token)
+    {
+        _specialists.Attach(specialist);
+
+        specialist.ImageUri = null;
+
+        await _context.SaveChangesAsync(token);
+    }
+
     public async Task SaveCvAsync(Specialist specialist, string cvUri, CancellationToken token)
     {
         _specialists.Attach(specialist);

@@ -19,5 +19,9 @@ public interface ISpecialistService
 
     public Task SaveCvAsync(Guid specialistId, IFormFile cvFile, CancellationToken token);
 
+    public Task RemoveCvAsync(Guid specialistId, CancellationToken token);
+
     public Task SaveImageAsync(Guid specialistId, IFormFile image, CancellationToken token);
+
+    public Task RemoveImageAsync(Guid specialistId, CancellationToken token);
 }

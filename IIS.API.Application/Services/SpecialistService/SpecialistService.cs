@@ -54,13 +54,20 @@ internal sealed class SpecialistService : ISpecialistService
 
         if (specialist.ImageUri is not null)
         {
-            string? file = Directory.EnumerateFiles(Path.Combine(_options.WebRootPath, "cv"))
-                                        .FirstOrDefault(specialist.ImageUri.Contains);
+            string? file = Directory.EnumerateFiles(Path.Combine(_specialistFolder, "Avatar"))
+                                    .FirstOrDefault(f => specialist.ImageUri.Contains(Path.GetFileName(f)));
 
-            if (file == default)
-                throw new KeyNotFoundException("Deleted image not found");
+            if (file != default)
+                File.Delete(file);
+        }
 
-            File.Delete(file);
+        if (specialist.CvUri is not null)
+        {
+            string? file = Directory.EnumerateFiles(Path.Combine(_specialistFolder, "cv"))
+                                    .FirstOrDefault(f => specialist.CvUri.Contains(Path.GetFileName(f)));
+
+            if (file != default)
+                File.Delete(file);
         }
 
         await _specialistRepository.DeleteSpecialistAsync(specialist, token);
@@ -160,14 +167,6 @@ internal sealed class SpecialistService : ISpecialistService
         await _specialistRepository.SaveImageAsync(specialist, Path.Combine($"{_options.Host}/Images/Specialists/Avatar", fName), token);
     }
 
-    private static string GetFilePath(string fileName, string folderPath, out string newFileName)
-    {
-        string extension = Path.GetExtension(fileName);
-        newFileName = Path.ChangeExtension(Path.GetRandomFileName(), extension);
-
-        return Path.Combine(folderPath, newFileName);
-    }
-
     public async Task RemoveCvAsync(Guid specialistId, CancellationToken token)
     {
         Specialist? specialist = await _specialistRepository.FirstOrDefaultSpecialistAsync(s => s.Id == specialistId, token);
@@ -209,5 +208,13 @@ internal sealed class SpecialistService : ISpecialistService
         File.Delete(file);
 
         await _specialistRepository.RemoveImageAsync(specialist, token);
+    }
+
+    private static string GetFilePath(string fileName, string folderPath, out string newFileName)
+    {
+        string extension = Path.GetExtension(fileName);
+        newFileName = Path.ChangeExtension(Path.GetRandomFileName(), extension);
+
+        return Path.Combine(folderPath, newFileName);
     }
 }

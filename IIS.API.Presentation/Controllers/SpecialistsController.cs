@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using IIS.API.Application.Services.SpecialistService;
 using IIS.API.Domain.Entities;
-using IIS.API.Presentation.Common.Models.Review;
 using IIS.API.Presentation.Common.Models.Specialist;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

@@ -12,7 +12,7 @@ public class SpecialistDTO
 
     required public string Email { get; set; }
 
-    required public string Desscription {  get; set; }
+    required public string Description {  get; set; }
 
     required public string Position { get; set; }
 

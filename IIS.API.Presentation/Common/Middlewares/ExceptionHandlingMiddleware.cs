@@ -65,8 +65,8 @@ public class ExceptionHandlingMiddleware
         }
         catch (Exception exception)
         {
-            throw;
-            await Console.Out.WriteLineAsync(exception.Message);
+            //throw;
+            //await Console.Out.WriteLineAsync(exception.Message);
             var problemDetails = new ProblemDetails
             {
                 Status = StatusCodes.Status500InternalServerError,
@@ -78,6 +78,8 @@ public class ExceptionHandlingMiddleware
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
 
             await context.Response.WriteAsJsonAsync(problemDetails);
+
+            throw;
         }
     }
 }

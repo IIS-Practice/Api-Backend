@@ -180,12 +180,12 @@ internal sealed class SpecialistService : ISpecialistService
         string? file = Directory.EnumerateFiles(Path.Combine(_specialistFolder, "cv"))
                                     .FirstOrDefault(f => specialist.CvUri.Contains(Path.GetFileName(f)));
 
+        await _specialistRepository.RemoveCvAsync(specialist, token);
+
         if (file == default)
-            throw new KeyNotFoundException("Deleted cv not found");
+            throw new KeyNotFoundException("Deleted cv file not found");
 
         File.Delete(file);
-
-        await _specialistRepository.RemoveCvAsync(specialist, token);
     }
 
     public async Task RemoveImageAsync(Guid specialistId, CancellationToken token)
@@ -201,13 +201,12 @@ internal sealed class SpecialistService : ISpecialistService
         string? file = Directory.EnumerateFiles(Path.Combine(_specialistFolder, "Avatar"))
                                     .FirstOrDefault(f => specialist.ImageUri.Contains(Path.GetFileName(f)));
 
+        await _specialistRepository.RemoveImageAsync(specialist, token);
 
         if (file == default)
-            throw new KeyNotFoundException("Deleted avatar not found");
+            throw new KeyNotFoundException("Deleted avatar file not found");
 
         File.Delete(file);
-
-        await _specialistRepository.RemoveImageAsync(specialist, token);
     }
 
     private static string GetFilePath(string fileName, string folderPath, out string newFileName)

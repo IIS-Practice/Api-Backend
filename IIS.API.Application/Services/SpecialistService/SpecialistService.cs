@@ -127,10 +127,8 @@ internal sealed class SpecialistService : ISpecialistService
             string? file = Directory.EnumerateFiles(Path.Combine(_specialistFolder, "cv"))
                                             .FirstOrDefault(f => specialist.CvUri.Contains(Path.GetFileName(f)));
 
-            if (file == default)
-                throw new KeyNotFoundException("Deleted cv not found");
-
-            File.Delete(file);
+            if (file != default)
+                File.Delete(file);
         }
 
         string filePath = GetFilePath(cvFile.FileName, Path.Combine(_specialistFolder, "cv"), out string fName);
@@ -153,10 +151,8 @@ internal sealed class SpecialistService : ISpecialistService
             string? file = Directory.EnumerateFiles(Path.Combine(_specialistFolder, "Avatar"))
                                 .FirstOrDefault(f => specialist.ImageUri.Contains(Path.GetFileName(f)));
 
-            if (file == default)
-                throw new KeyNotFoundException("Deleted image not found");
-
-            File.Delete(file);
+            if (file != default)
+                File.Delete(file);
         }
 
         string filePath = GetFilePath(imageFile.FileName, Path.Combine(_specialistFolder, "Avatar"), out string fName);

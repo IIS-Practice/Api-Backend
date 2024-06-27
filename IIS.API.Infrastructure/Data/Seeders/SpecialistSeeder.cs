@@ -22,8 +22,6 @@ public static class SpecialistSeeder
                 Position = "Разработчик",
                 Password = "Kiany123",
                 Description = "Я Киану Ривз, дитя EPAMа занимаюсь разработкой 25 лет",
-                CvUri = "",
-                ImageUri = ""
             },
 
             new Specialist() {
@@ -41,8 +39,6 @@ public static class SpecialistSeeder
                 Position = "Разработчик",
                 Password = "Jahseh123",
                 Description = "Стажер, клянусь своей жизнью, что сделаю вам офигительного бота",
-                CvUri = "",
-                ImageUri = ""
             },
             new Specialist() {
                 Id = Guid.Parse("f39abfe8-786f-4b3a-8d86-4d684e729aa6"),
@@ -59,8 +55,6 @@ public static class SpecialistSeeder
                 Gender = 2,
                 Position = "Аналитик",
                 Description = "За деньги да, мечу на главного бизнес-аналитика",
-                CvUri = "",
-                ImageUri = ""
             },
             new Specialist() {
                 Id = Guid.Parse("bd50b4c5-98ab-4d2b-974d-07e53c3cb627"),
@@ -77,8 +71,6 @@ public static class SpecialistSeeder
                 Gender = 1,
                 Position = "Дизайнер",
                 Description = "Коллаборацию с McDonald's сделал и дизайн в figma сделаю",
-                CvUri = "",
-                ImageUri = ""
             },
             new Specialist() {
                 Id = Guid.Parse("e8b52180-e2e0-4461-9bf3-372d19d5f28c"),
@@ -95,8 +87,6 @@ public static class SpecialistSeeder
                 Gender = 1,
                 Position = "Дизайнер",
                 Description = "Могу отмудохать вам дизайн или лицо. Стаж 2 года",
-                CvUri = "",
-                ImageUri = ""
             },
             new Specialist() {
                 Id = Guid.Parse("6d028d9d-9378-4db4-8d87-35b7f3d8d973"),
@@ -113,8 +103,6 @@ public static class SpecialistSeeder
                 Gender = 2,
                 Position = "Разработчик",
                 Description = "Если вам не понравится, наведу порчу на понос))",
-                CvUri = "",
-                ImageUri = ""
             },
             new Specialist() {
                 Id = Guid.Parse("ae41a12f-3c43-4a6e-b1b1-5452e676ed98"),
@@ -131,8 +119,6 @@ public static class SpecialistSeeder
                 Gender = 1,
                 Position = "Дизайнер",
                 Description = "Старший дизайнер, стаж 20 лет. Сделаю живой дизайн",
-                CvUri = "",
-                ImageUri = ""
             },
             new Specialist() {
                 Id = Guid.Parse("cdff6b4b-4a2a-4927-b9e5-80154f893539"),
@@ -149,8 +135,6 @@ public static class SpecialistSeeder
                 Gender = 2,
                 Position = "Разработчик",
                 Description = "Проект будет готов к 32 числу месяца",
-                CvUri = "",
-                ImageUri = ""
             },
             new Specialist() {
                 Id = Guid.Parse("6a422a99-b975-485f-a95e-c1449a4d3622"),
@@ -165,11 +149,9 @@ public static class SpecialistSeeder
                 Password = "Ksenia2345",
                 DateOfBirth = DateTime.Parse("1991-11-05T19:20:25.988Z"),
                 Gender = 2,
-                Position = "Бизнес-аналитик",
+                Position = "Аналитик",
                 Description = "Думаете как старший аналитик я не смогу справиться с вашим заказом? " +
                               "Да я даже в президенты баллотировалась",
-                CvUri = "",
-                ImageUri = ""
             }
         ]);
     }

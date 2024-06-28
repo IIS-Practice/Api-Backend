@@ -13,7 +13,9 @@ public class CaseToDTO : Profile
                 opt => opt.MapFrom(c => c.Id))
             .ForMember(cDTO => cDTO.Name,
                 opt => opt.MapFrom(c => c.Name))
-            .ForMember(cDTO => cDTO.Description,
+            .ForMember(cDTO => cDTO.ShortDescription,
+                opt => opt.MapFrom(c => c.ShortDescription))
+            .ForMember(cDTO => cDTO.InnerHtml,
                 opt => opt.MapFrom(c => c.Description))
             .ForMember(cDTO => cDTO.Complexity,
                 opt => opt.MapFrom(c => c.Complexity))

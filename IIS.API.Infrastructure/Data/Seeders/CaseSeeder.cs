@@ -11,6 +11,7 @@ public static class CaseSeeder
             {
                 Id = Guid.Parse("36F010ED-8C38-4EEB-B9EC-5FB56CCF3189"),
                 Name = "Name 1",
+                ShortDescription = "Des 1",
                 Description = "Description 1",
                 Complexity = 5,
                 Cost = 1400,
@@ -21,6 +22,7 @@ public static class CaseSeeder
             {
                 Id = Guid.Parse("36F056ED-8C38-4EEB-B9EC-5FB56CCF3189"),
                 Name = "Name 2",
+                ShortDescription = "Des 2",
                 Description = "Description 2",
                 Complexity = 8,
                 Cost = 3500,
@@ -31,6 +33,7 @@ public static class CaseSeeder
             {
                 Id = Guid.Parse("15F010ED-8C38-4EEB-B9EC-5FB36CCF3189"),
                 Name = "Name 3",
+                ShortDescription = "Des 3",
                 Description = "Description 3",
                 Complexity = 2,
                 Cost = 500,

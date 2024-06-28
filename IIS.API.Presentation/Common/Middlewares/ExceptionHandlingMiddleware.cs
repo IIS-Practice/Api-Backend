@@ -63,7 +63,7 @@ public class ExceptionHandlingMiddleware
             context.Response.StatusCode = StatusCodes.Status404NotFound;
             await context.Response.WriteAsJsonAsync(problemDetails);
         }
-        catch (Exception exception)
+        catch (Exception)
         {
             //throw;
             //await Console.Out.WriteLineAsync(exception.Message);

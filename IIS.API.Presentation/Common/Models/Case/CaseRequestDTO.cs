@@ -4,7 +4,9 @@ public class CaseRequestDTO
 {
     required public string Name { get; set; }
 
-    required public string Description { get; set; }
+    required public string ShortDescription { get; set; }
+
+    required public string InnerHtml { get; set; }
 
     required public DateTime StartDate { get; set; }
 

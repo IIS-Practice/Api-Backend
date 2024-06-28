@@ -1,4 +1,5 @@
 ﻿using IIS.API.Domain.Entities;
+using IIS.API.Infrastructure.Data.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,5 +14,7 @@ internal class FaqEntityTypeConfigurator : IEntityTypeConfiguration<Faq>
 
         faqConfigBuilder.Property(f => f.Question).IsRequired();
         faqConfigBuilder.Property(f => f.Answer).IsRequired();
+
+        faqConfigBuilder.SeedFaqs();
     }
 }

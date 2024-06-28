@@ -10,12 +10,13 @@ internal class CaseEntityTypeConfigurator : IEntityTypeConfiguration<Case>
     {
         caseConfigBuilder.ToTable("Cases");
 
-        caseConfigBuilder.HasKey(s => s.Id);
+        caseConfigBuilder.HasKey(c => c.Id);
 
-        caseConfigBuilder.Property(s => s.Name).IsRequired().HasMaxLength(30);
-        caseConfigBuilder.Property(s => s.Description).IsRequired();
-        caseConfigBuilder.Property(s => s.Cost).IsRequired().HasPrecision(10, 2);
-        caseConfigBuilder.Property(s => s.Complexity).IsRequired();
+        caseConfigBuilder.Property(c => c.Name).IsRequired().HasMaxLength(30);
+        caseConfigBuilder.Property(c => c.ShortDescription).IsRequired().HasMaxLength(500);
+        caseConfigBuilder.Property(c => c.Description).IsRequired();
+        caseConfigBuilder.Property(c => c.Cost).IsRequired().HasPrecision(10, 2);
+        caseConfigBuilder.Property(c => c.Complexity).IsRequired();
 
         caseConfigBuilder.SeedCases();
     }

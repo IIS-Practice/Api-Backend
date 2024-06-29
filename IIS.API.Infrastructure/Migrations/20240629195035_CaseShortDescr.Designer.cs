@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IIS.API.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240628093929_CaseShortDercr")]
-    partial class CaseShortDercr
+    [Migration("20240629195035_CaseShortDescr")]
+    partial class CaseShortDescr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,7 @@ namespace IIS.API.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 6, 28, 9, 39, 27, 364, DateTimeKind.Utc).AddTicks(4111));
+                        .HasDefaultValue(new DateTime(2024, 6, 29, 19, 50, 35, 349, DateTimeKind.Utc).AddTicks(2939));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -82,7 +82,7 @@ namespace IIS.API.Infrastructure.Migrations
                         {
                             Id = new Guid("68bf8340-f170-46de-ac5f-5a7f59f2103e"),
                             Author = "Author 1",
-                            Date = new DateTime(2024, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(4698),
+                            Date = new DateTime(2024, 6, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(3527),
                             Description = "Description 1",
                             Email = "email1@gmail.com",
                             NormalizedEmail = "email1@gmail.com",
@@ -92,7 +92,7 @@ namespace IIS.API.Infrastructure.Migrations
                         {
                             Id = new Guid("afb6a935-00ce-45fc-95b6-5f807d92a95e"),
                             Author = "Author 2",
-                            Date = new DateTime(2024, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(4701),
+                            Date = new DateTime(2024, 6, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(3531),
                             Description = "Description 2",
                             Email = "email2@gmail.com",
                             NormalizedEmail = "email2@gmail.com",
@@ -145,38 +145,14 @@ namespace IIS.API.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("36f010ed-8c38-4eeb-b9ec-5fb56ccf3189"),
-                            Complexity = 5,
-                            Cost = 1400m,
-                            Description = "Description 1",
-                            EndDate = new DateTime(2024, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3079),
+                            Complexity = 6,
+                            Cost = 900m,
+                            Description = "   <div class=\"case-description\" style=\"margin-top: 100px;\">\r\n          <h2 style=\"font-size: 1.75rem; font-weight: 600; line-height: 2.133rem; margin-bottom: 60px;\">\r\n            PITA STREET FOOD\r\n          </h2>\r\n          <p style=\"font-size: 1.5rem; font-weight: 400; line-height: 1.828rem; margin-bottom: 15px;\">\r\n            Специализируется на <br /> кулинарии\r\n          </p>\r\n        </div>\r\n        <div class=\"project-details-image\" style=\"display: flex; flex-direction: row; margin-bottom: 130px;\">\r\n          <img style=\"height: 37.3rem; width: 27.7rem; object-fit: cover; margin-right: 3%;\" src=\"https://avatars.mds.yandex.net/i?id=48a4918289cb9ad4a778c06b628dfd8765dc83a0-12146588-images-thumbs&n=13\" alt=\"Project Details\" />\r\n          <div class=\"info\" style=\"display: flex; justify-content: space-between; flex-direction: column;\">\r\n            <p style=\"font-size: 1.5rem; font-weight: 400; line-height: 1.828rem; text-align: left;\">\r\n              Компания “PITA STREET FOOD” обратилась к нам за разработкой полноценного сайта их заведения. В ходе живого общения с нашими специалистами, заказчик четко определился со структурой сайта, также в ТЗ была включена реализация платёжной системы сайта.\r\n            </p>\r\n            <p style=\"font-size: 1.5rem; font-weight: 400; line-height: 1.828rem; text-align: left;\">\r\n              На ранних этапах сотрудничества, мы составили поэтапную смету, промежуточные сроки реализации, в рамках которых вели дальнейшую разработку проекта.\r\n            </p>\r\n          </div>\r\n        </div>",
+                            EndDate = new DateTime(2024, 6, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(2013),
                             ImagesUri = "[]",
-                            Name = "Name 1",
-                            ShortDescription = "Des 1",
-                            StartDate = new DateTime(2024, 1, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3075)
-                        },
-                        new
-                        {
-                            Id = new Guid("36f056ed-8c38-4eeb-b9ec-5fb56ccf3189"),
-                            Complexity = 8,
-                            Cost = 3500m,
-                            Description = "Description 2",
-                            EndDate = new DateTime(2024, 4, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3083),
-                            ImagesUri = "[]",
-                            Name = "Name 2",
-                            ShortDescription = "Des 2",
-                            StartDate = new DateTime(2023, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3082)
-                        },
-                        new
-                        {
-                            Id = new Guid("15f010ed-8c38-4eeb-b9ec-5fb36ccf3189"),
-                            Complexity = 2,
-                            Cost = 500m,
-                            Description = "Description 3",
-                            EndDate = new DateTime(2024, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3086),
-                            ImagesUri = "[]",
-                            Name = "Name 3",
-                            ShortDescription = "Des 3",
-                            StartDate = new DateTime(2024, 5, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3085)
+                            Name = "PITA STREET FOOD",
+                            ShortDescription = "Разработка сайта для корректного отображения на всех устройствах!",
+                            StartDate = new DateTime(2024, 1, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(2010)
                         });
                 });
 
@@ -295,7 +271,7 @@ namespace IIS.API.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1d4c7f21-0a12-4222-b08a-64d44ed719a4"),
+                            Id = new Guid("991e9ad5-6ed1-4337-be99-6b79b8e2c1f7"),
                             Complexity = 5,
                             Cost = 159m,
                             Description = "description 1",
@@ -303,7 +279,7 @@ namespace IIS.API.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9d0a6376-f546-4beb-94ff-66b8a5282acf"),
+                            Id = new Guid("8b5dbd10-01a3-4430-8a7c-37df82f47024"),
                             Complexity = 3,
                             Cost = 109m,
                             Description = "description 2",
@@ -387,7 +363,7 @@ namespace IIS.API.Infrastructure.Migrations
                             Id = new Guid("68bf8340-f170-46de-ac5f-5a7f59f2103e"),
                             City = "City 1",
                             Country = "Country 1",
-                            DateOfBirth = new DateTime(2004, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(1320),
+                            DateOfBirth = new DateTime(2004, 6, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(391),
                             Email = "email1@gmail.com",
                             Gender = 1,
                             Name = "Name 1",
@@ -402,7 +378,7 @@ namespace IIS.API.Infrastructure.Migrations
                             Id = new Guid("afb6a935-00ce-45fc-95b6-5f807d92a95e"),
                             City = "City 2",
                             Country = "Country 2",
-                            DateOfBirth = new DateTime(1974, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(1336),
+                            DateOfBirth = new DateTime(1974, 6, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(405),
                             Email = "email2@gmail.com",
                             Gender = 2,
                             Name = "Name 2",

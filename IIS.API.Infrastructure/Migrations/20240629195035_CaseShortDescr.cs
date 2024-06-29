@@ -8,11 +8,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IIS.API.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CaseShortDercr : Migration
+    public partial class CaseShortDescr : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DeleteData(
+                table: "Cases",
+                keyColumn: "Id",
+                keyValue: new Guid("15f010ed-8c38-4eeb-b9ec-5fb36ccf3189"));
+
+            migrationBuilder.DeleteData(
+                table: "Cases",
+                keyColumn: "Id",
+                keyValue: new Guid("36f056ed-8c38-4eeb-b9ec-5fb56ccf3189"));
+
             migrationBuilder.DeleteData(
                 table: "Serveces",
                 keyColumn: "Id",
@@ -36,7 +46,7 @@ namespace IIS.API.Infrastructure.Migrations
                 table: "Applications",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2024, 6, 28, 9, 39, 27, 364, DateTimeKind.Utc).AddTicks(4111),
+                defaultValue: new DateTime(2024, 6, 29, 19, 50, 35, 349, DateTimeKind.Utc).AddTicks(2939),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
                 oldDefaultValue: new DateTime(2024, 6, 27, 15, 56, 43, 151, DateTimeKind.Utc).AddTicks(6987));
@@ -46,35 +56,21 @@ namespace IIS.API.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: new Guid("68bf8340-f170-46de-ac5f-5a7f59f2103e"),
                 column: "Date",
-                value: new DateTime(2024, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(4698));
+                value: new DateTime(2024, 6, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(3527));
 
             migrationBuilder.UpdateData(
                 table: "Applications",
                 keyColumn: "Id",
                 keyValue: new Guid("afb6a935-00ce-45fc-95b6-5f807d92a95e"),
                 column: "Date",
-                value: new DateTime(2024, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(4701));
-
-            migrationBuilder.UpdateData(
-                table: "Cases",
-                keyColumn: "Id",
-                keyValue: new Guid("15f010ed-8c38-4eeb-b9ec-5fb36ccf3189"),
-                columns: new[] { "EndDate", "ShortDescription", "StartDate" },
-                values: new object[] { new DateTime(2024, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3086), "Des 3", new DateTime(2024, 5, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3085) });
+                value: new DateTime(2024, 6, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(3531));
 
             migrationBuilder.UpdateData(
                 table: "Cases",
                 keyColumn: "Id",
                 keyValue: new Guid("36f010ed-8c38-4eeb-b9ec-5fb56ccf3189"),
-                columns: new[] { "EndDate", "ShortDescription", "StartDate" },
-                values: new object[] { new DateTime(2024, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3079), "Des 1", new DateTime(2024, 1, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3075) });
-
-            migrationBuilder.UpdateData(
-                table: "Cases",
-                keyColumn: "Id",
-                keyValue: new Guid("36f056ed-8c38-4eeb-b9ec-5fb56ccf3189"),
-                columns: new[] { "EndDate", "ShortDescription", "StartDate" },
-                values: new object[] { new DateTime(2024, 4, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3083), "Des 2", new DateTime(2023, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(3082) });
+                columns: new[] { "Complexity", "Cost", "Description", "EndDate", "Name", "ShortDescription", "StartDate" },
+                values: new object[] { 6, 900m, "   <div class=\"case-description\" style=\"margin-top: 100px;\">\r\n          <h2 style=\"font-size: 1.75rem; font-weight: 600; line-height: 2.133rem; margin-bottom: 60px;\">\r\n            PITA STREET FOOD\r\n          </h2>\r\n          <p style=\"font-size: 1.5rem; font-weight: 400; line-height: 1.828rem; margin-bottom: 15px;\">\r\n            Специализируется на <br /> кулинарии\r\n          </p>\r\n        </div>\r\n        <div class=\"project-details-image\" style=\"display: flex; flex-direction: row; margin-bottom: 130px;\">\r\n          <img style=\"height: 37.3rem; width: 27.7rem; object-fit: cover; margin-right: 3%;\" src=\"https://avatars.mds.yandex.net/i?id=48a4918289cb9ad4a778c06b628dfd8765dc83a0-12146588-images-thumbs&n=13\" alt=\"Project Details\" />\r\n          <div class=\"info\" style=\"display: flex; justify-content: space-between; flex-direction: column;\">\r\n            <p style=\"font-size: 1.5rem; font-weight: 400; line-height: 1.828rem; text-align: left;\">\r\n              Компания “PITA STREET FOOD” обратилась к нам за разработкой полноценного сайта их заведения. В ходе живого общения с нашими специалистами, заказчик четко определился со структурой сайта, также в ТЗ была включена реализация платёжной системы сайта.\r\n            </p>\r\n            <p style=\"font-size: 1.5rem; font-weight: 400; line-height: 1.828rem; text-align: left;\">\r\n              На ранних этапах сотрудничества, мы составили поэтапную смету, промежуточные сроки реализации, в рамках которых вели дальнейшую разработку проекта.\r\n            </p>\r\n          </div>\r\n        </div>", new DateTime(2024, 6, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(2013), "PITA STREET FOOD", "Разработка сайта для корректного отображения на всех устройствах!", new DateTime(2024, 1, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(2010) });
 
             migrationBuilder.InsertData(
                 table: "Faqs",
@@ -91,8 +87,8 @@ namespace IIS.API.Infrastructure.Migrations
                 columns: new[] { "Id", "Complexity", "Cost", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("1d4c7f21-0a12-4222-b08a-64d44ed719a4"), 5, 159m, "description 1", "service 1" },
-                    { new Guid("9d0a6376-f546-4beb-94ff-66b8a5282acf"), 3, 109m, "description 2", "service 2" }
+                    { new Guid("8b5dbd10-01a3-4430-8a7c-37df82f47024"), 3, 109m, "description 2", "service 2" },
+                    { new Guid("991e9ad5-6ed1-4337-be99-6b79b8e2c1f7"), 5, 159m, "description 1", "service 1" }
                 });
 
             migrationBuilder.UpdateData(
@@ -114,7 +110,7 @@ namespace IIS.API.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: new Guid("68bf8340-f170-46de-ac5f-5a7f59f2103e"),
                 column: "DateOfBirth",
-                value: new DateTime(2004, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(1320));
+                value: new DateTime(2004, 6, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(391));
 
             migrationBuilder.UpdateData(
                 table: "Users",
@@ -142,7 +138,7 @@ namespace IIS.API.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: new Guid("afb6a935-00ce-45fc-95b6-5f807d92a95e"),
                 column: "DateOfBirth",
-                value: new DateTime(1974, 6, 28, 12, 39, 27, 364, DateTimeKind.Local).AddTicks(1336));
+                value: new DateTime(1974, 6, 29, 22, 50, 35, 349, DateTimeKind.Local).AddTicks(405));
 
             migrationBuilder.UpdateData(
                 table: "Users",
@@ -194,12 +190,12 @@ namespace IIS.API.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "Serveces",
                 keyColumn: "Id",
-                keyValue: new Guid("1d4c7f21-0a12-4222-b08a-64d44ed719a4"));
+                keyValue: new Guid("8b5dbd10-01a3-4430-8a7c-37df82f47024"));
 
             migrationBuilder.DeleteData(
                 table: "Serveces",
                 keyColumn: "Id",
-                keyValue: new Guid("9d0a6376-f546-4beb-94ff-66b8a5282acf"));
+                keyValue: new Guid("991e9ad5-6ed1-4337-be99-6b79b8e2c1f7"));
 
             migrationBuilder.DropColumn(
                 name: "ShortDescription",
@@ -213,7 +209,7 @@ namespace IIS.API.Infrastructure.Migrations
                 defaultValue: new DateTime(2024, 6, 27, 15, 56, 43, 151, DateTimeKind.Utc).AddTicks(6987),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2024, 6, 28, 9, 39, 27, 364, DateTimeKind.Utc).AddTicks(4111));
+                oldDefaultValue: new DateTime(2024, 6, 29, 19, 50, 35, 349, DateTimeKind.Utc).AddTicks(2939));
 
             migrationBuilder.UpdateData(
                 table: "Applications",
@@ -232,23 +228,18 @@ namespace IIS.API.Infrastructure.Migrations
             migrationBuilder.UpdateData(
                 table: "Cases",
                 keyColumn: "Id",
-                keyValue: new Guid("15f010ed-8c38-4eeb-b9ec-5fb36ccf3189"),
-                columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2024, 6, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6056), new DateTime(2024, 5, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6056) });
-
-            migrationBuilder.UpdateData(
-                table: "Cases",
-                keyColumn: "Id",
                 keyValue: new Guid("36f010ed-8c38-4eeb-b9ec-5fb56ccf3189"),
-                columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2024, 6, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6049), new DateTime(2024, 1, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6045) });
+                columns: new[] { "Complexity", "Cost", "Description", "EndDate", "Name", "StartDate" },
+                values: new object[] { 5, 1400m, "Description 1", new DateTime(2024, 6, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6049), "Name 1", new DateTime(2024, 1, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6045) });
 
-            migrationBuilder.UpdateData(
+            migrationBuilder.InsertData(
                 table: "Cases",
-                keyColumn: "Id",
-                keyValue: new Guid("36f056ed-8c38-4eeb-b9ec-5fb56ccf3189"),
-                columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2024, 4, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6053), new DateTime(2023, 6, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6052) });
+                columns: new[] { "Id", "Complexity", "Cost", "Description", "EndDate", "ImagesUri", "Name", "StartDate" },
+                values: new object[,]
+                {
+                    { new Guid("15f010ed-8c38-4eeb-b9ec-5fb36ccf3189"), 2, 500m, "Description 3", new DateTime(2024, 6, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6056), "[]", "Name 3", new DateTime(2024, 5, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6056) },
+                    { new Guid("36f056ed-8c38-4eeb-b9ec-5fb56ccf3189"), 8, 3500m, "Description 2", new DateTime(2024, 4, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6053), "[]", "Name 2", new DateTime(2023, 6, 27, 18, 56, 43, 151, DateTimeKind.Local).AddTicks(6052) }
+                });
 
             migrationBuilder.InsertData(
                 table: "Serveces",

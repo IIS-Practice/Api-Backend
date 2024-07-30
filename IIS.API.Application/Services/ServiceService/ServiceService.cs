@@ -84,4 +84,19 @@ internal class ServiceService : IServiceService
 
         await _serviceRepository.AddCaseToServiceAsync(service, @case, token);
     }
+
+    public async Task RemoveCaseFromServiceAsync(Guid serviceId, Guid caseId, CancellationToken token)
+    {
+        Service? service = await _serviceRepository.FirstOrDefaultServiceAsync(s => s.Id == serviceId, token, s => s.Cases);
+
+        if (service == default)
+            throw new KeyNotFoundException("Service not found");
+
+        Case? @case = await _caseRepository.FirstOrDefaultCaseAsync(c => c.Id == caseId, token);
+
+        if (@case == default)
+            throw new KeyNotFoundException("Case mot found");
+
+        await _serviceRepository.RemoveCaseFromServiceAsync(service, @case, token);
+    }
 }

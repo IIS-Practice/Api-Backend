@@ -29,7 +29,7 @@ public class SerilogMiddleware
     private static void WarningHandle(HttpRequest request, HttpResponse response)
     {
         var method = request.Method;
-        var requestPath = request.Path + "/" + String.Join('/', request.Query);
+        var requestPath = request.Path + "?" + String.Join('&', request.Query.Select(q => $"{q.Key}={q.Value}"));
         var responseCode = response.StatusCode;
         
         Log.Warning("HTTP {Method} {RequestPath} responsed {ResponseCode}", method, requestPath, responseCode);

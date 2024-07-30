@@ -136,7 +136,7 @@ internal sealed class SpecialistService : ISpecialistService
         using Stream fileStream = new FileStream(filePath, FileMode.Create);
         await cvFile.CopyToAsync(fileStream, token);
 
-        await _specialistRepository.SaveCvAsync(specialist, Path.Combine($"{_options.Host}/Images/Specialists/cv", fName), token);
+        await _specialistRepository.SaveCvAsync(specialist, $"{_options.Host}/Images/Specialists/cv/{fName}", token);
     }
 
     public async Task SaveImageAsync(Guid specialistId, IFormFile imageFile, CancellationToken token)
@@ -160,7 +160,7 @@ internal sealed class SpecialistService : ISpecialistService
         using Stream fileStream = new FileStream(filePath, FileMode.Create);
         await imageFile.CopyToAsync(fileStream, token);
 
-        await _specialistRepository.SaveImageAsync(specialist, Path.Combine($"{_options.Host}/Images/Specialists/Avatar", fName), token);
+        await _specialistRepository.SaveImageAsync(specialist, $"{_options.Host}/Images/Specialists/cv/{fName}", token);
     }
 
     public async Task RemoveCvAsync(Guid specialistId, CancellationToken token)

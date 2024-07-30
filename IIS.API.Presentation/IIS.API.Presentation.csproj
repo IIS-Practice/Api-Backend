@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Images\Cases\" />
+    <Folder Include="wwwroot\Images\Cases\36f010ed-8c38-4eeb-b9ec-5fb56ccf3189\" />
     <Folder Include="wwwroot\Images\Specialists\cv\" />
     <Folder Include="wwwroot\Images\Specialists\Avatar\" />
   </ItemGroup>

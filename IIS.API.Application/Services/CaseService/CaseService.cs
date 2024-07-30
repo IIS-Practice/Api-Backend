@@ -62,7 +62,7 @@ internal sealed class CaseService : ICaseService
         using Stream fileStream = new FileStream(filePath, FileMode.Create);
         await image.CopyToAsync(fileStream, token);
 
-        await _caseRepository.AddImageAsync(@case, Path.Combine($"{_options.Host}/Images/Cases", @case.Id.ToString(), fileName), token);
+        await _caseRepository.AddImageAsync(@case, $"{_options.Host}/Images/Cases/{@case.Id}/{fileName}", token);
     }
 
     public async Task DeleteCaseAsync(Guid caseId, CancellationToken token)
@@ -113,7 +113,7 @@ internal sealed class CaseService : ICaseService
         await _caseRepository.RemoveImageAsync(@case, fullImage, token);
     }
 
-    public Task<Guid> UpdateCaseAsync(Case @case, CancellationToken token)
+    public async Task<Guid> UpdateCaseAsync(Case @case, CancellationToken token)
     {
         ValidationResult valRes = _caseValidator.Validate(@case);
 
@@ -122,6 +122,18 @@ internal sealed class CaseService : ICaseService
             throw new ValidationException(valRes.Errors);
         }
 
-        return _caseRepository.UpdateCaseAsync(@case, token);
+        Case? existCase = await _caseRepository.FirstOrDefaultCaseAsync(c => c.Id == @case.Id, token);
+
+        if (existCase == default)
+        {
+            throw new KeyNotFoundException("Case not found");
+        }
+
+        if (@case.ImagesUri.Count == 0)
+        {
+            @case.ImagesUri = existCase.ImagesUri;
+        }
+
+        return await _caseRepository.UpdateCaseAsync(@case, token);
     }
 }

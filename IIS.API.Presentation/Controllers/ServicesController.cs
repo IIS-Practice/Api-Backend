@@ -54,8 +54,8 @@ public class ServicesController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost("{serviceId}")]
-    public async Task<IActionResult> PostCase([FromRoute] string serviceId, [FromBody] string caseId, CancellationToken token)
+    [HttpPost("{serviceId}/cases")]
+    public async Task<IActionResult> PostCase([FromRoute] string serviceId, [FromQuery] string caseId, CancellationToken token)
     {
         if (Guid.TryParse(serviceId, out Guid servId)
                 && Guid.TryParse(caseId, out Guid casId))
@@ -90,6 +90,20 @@ public class ServicesController : ControllerBase
         if (Guid.TryParse(id, out var serviceId))
         {
             await _serviceService.DeleteServiceAsync(serviceId, token);
+
+            return NoContent();
+        }
+
+        return NotFound();
+    }
+
+    [HttpDelete("{serviceId}/cases")]
+    public async Task<IActionResult> RemoveCase([FromRoute] string serviceId, [FromQuery] string caseId, CancellationToken token)
+    {
+        if (Guid.TryParse(serviceId, out Guid servId)
+                && Guid.TryParse(caseId, out Guid casId))
+        {
+            await _serviceService.RemoveCaseFromServiceAsync(servId, casId, token);
 
             return NoContent();
         }

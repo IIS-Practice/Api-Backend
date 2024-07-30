@@ -15,4 +15,6 @@ public interface IServiceRepository
     public Task<Service?> FirstOrDefaultServiceAsync(Expression<Func<Service, bool>> filtres, CancellationToken token, params Expression<Func<Service, object>>[]? includesProperties);
 
     public Task AddCaseToServiceAsync(Service service, Case @case, CancellationToken token);
+
+    public Task RemoveCaseFromServiceAsync(Service service, Case @case, CancellationToken token);
 }

@@ -16,15 +16,15 @@ try
 {
     Log.Information("Starting IIS API at {Now}", DateTime.UtcNow);
 
+    app.UseStaticFiles();
+
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
     }
 
-    app.UseHttpsRedirection();
-
-    app.UseStaticFiles();
+    //app.UseHttpsRedirection();
 
     app.UseMiddleware<SerilogMiddleware>();
 

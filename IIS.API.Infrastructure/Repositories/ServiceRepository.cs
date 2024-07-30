@@ -78,6 +78,20 @@ internal class ServiceRepository : IServiceRepository
         return Task.FromResult(query.Where(filtres).AsEnumerable());
     }
 
+    public async Task RemoveCaseFromServiceAsync(Service service, Case @case, CancellationToken token)
+    {
+        _services.Attach(service);
+
+        Case? removedCase = service.Cases.FirstOrDefault(c => c.Id == @case.Id);
+
+        if (removedCase == default)
+            throw new ArgumentException("Service don't contains case", nameof(@case));
+
+        service.Cases.Remove(removedCase);
+
+        await _context.SaveChangesAsync(token);
+    }
+
     public async Task<Guid> UpdateServiceAsync(Service service, CancellationToken token)
     {
         _services.Update(service);

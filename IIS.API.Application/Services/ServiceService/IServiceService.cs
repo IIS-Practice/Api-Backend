@@ -15,4 +15,6 @@ public interface IServiceService
     public Task<Service?> GetFirstOrDefaultServiceAsync(Expression<Func<Service, bool>> predicate, CancellationToken token);
 
     public Task AddCaseToServiceAsync(Guid serviceId, Guid caseId, CancellationToken token);
+
+    public Task RemoveCaseFromServiceAsync(Guid serviceId, Guid caseId, CancellationToken token);
 }

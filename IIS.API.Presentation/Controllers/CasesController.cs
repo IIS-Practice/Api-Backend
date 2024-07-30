@@ -100,7 +100,7 @@ public class CasesController : ControllerBase
         return NotFound();
     }
 
-    [HttpDelete("/Images/Cases/{caseId}/{image}")]
+    [HttpDelete("/Images/Cases/{caseId}-{image}")]
     public async Task<IActionResult> DeleteImage([FromRoute] string caseId, [FromRoute] string image, CancellationToken token)
     {
         if (Guid.TryParse(caseId, out Guid id))
